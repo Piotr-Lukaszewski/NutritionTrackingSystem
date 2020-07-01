@@ -1,0 +1,89 @@
+{% load static %}
+
+<header>
+	<nav class="navbar navbar-dark .bg-dark navbar-expand-md" id="navbargroup">
+		<a class="navbar-brand" href="http://127.0.0.1:8000/">			
+			<img src="{% static 'images/logo.png' %}" width="30" height="30" alt="" class="d-inline-block mr-sm-1">	
+			<!-- m/p => margin/padding t,b,l,r top,bottom itp. x = l+r y = t+b  np. mx-5	 -->						
+			My web-site
+		</a>
+
+		<button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#mainmenu" aria-controls="mainmenu" aria-expanded="false" aria-label="nav-switch">
+			<span class="navbar-toggler-icon" ></span>
+		</button>			
+
+		<div class="collapse navbar-collapse" id="mainmenu">
+			<ul class="navbar-nav mr-auto px-md-5" >
+				<li class="nav-item px-5" size="16">
+					<a  class="nav-link"  href="#">Home</a>					
+				</li>
+
+				<li class="nav-item dropdown px-md-5">
+					<a  class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" 
+					id="submenu" aria-haspopup="true" href="#">Food</a>	
+
+					<div class="dropdown-menu" aria-labelledby="submenu">
+						{% if request.user.is_authenticated %}						
+  						<a class="dropdown-item" href="{% url 'food:prod_table' %}">Product table</a>	  											
+ 						{% endif %}
+ 						<a class="dropdown-item" href="#">Add new ingredient</a>
+ 						{% if request.user.is_authenticated %}	
+ 						<a class="dropdown-item" href="#">Create new meal</a>
+ 						{% endif %}
+					</div>				
+				</li>
+
+				<li class="nav-item dropdown px-md-5">
+					<a  class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" 
+					id="submenu" aria-haspopup="true" href="#">Articles</a>	
+
+					<div class="dropdown-menu" aria-labelledby="submenu">
+						<a class="dropdown-item" href="#">All articles</a>
+						{% if request.user.is_authenticated %}	
+						<a class="dropdown-item" href="#">Add article</a>
+						{% endif %}
+					</div>									
+				</li>
+
+				<li class="nav-item px-md-5">
+					<a  class="nav-link " href="#">Contact</a>					
+				</li>
+				<!--  -->
+				{% if request.user.is_authenticated %}
+
+					<li class="nav-item dropdown px-md-5">
+						<a  class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" 
+						id="submenu" aria-haspopup="true" href="#">Profile</a>	
+
+					<div class="dropdown-menu" aria-labelledby="submenu">
+						<a  class="dropdown-item" href="#">Edit Profile</a>	
+						<a  class="dropdown-item" href="#">Diet</a>						
+					</div>				
+					</li>
+
+				{% endif %}
+				<!--  -->
+				{% if request.user.is_authenticated %}
+					<li class="nav-item px-md-5">
+						<a  class="nav-link" href="#">Profile</a>					
+					</li>
+				{% endif %}
+			</ul>
+
+			<form class="form-inline">
+				<input class="form-control" type="search" placeholder="Seach" aria-label="search">
+				<button class="btn btn-secondary" type="submit">Search</button>
+			</form>
+
+			<div class="navbar-nav">
+				{% if request.user.is_authenticated %}
+					<a class="nav-item nav-link" href="#">Logout</a>
+				{% else %}
+					<a class="nav-item nav-link" href="#">Login</a>
+					<a class="nav-item nav-link" href="#">Register</a>
+				{% endif %}
+			</div>
+
+		</div>
+	</nav>
+</header>

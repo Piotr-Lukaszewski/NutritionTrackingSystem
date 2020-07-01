@@ -1,0 +1,55 @@
+body{
+	background-color: #0f121f;
+	font-family: Ubuntu;		
+	color: #fff;
+	font-size:large;
+	text-align: center;
+	
+}
+#navbargroup{
+	padding-bottom: 50px;
+}
+#title{
+	padding-bottom: 50px;
+}
+
+.content-section {
+	padding: 10px 20px;
+	border: 1px solid #dddddd;
+	border-radius: 3px;
+	margin-bottom: 20px;
+}
+
+.article-title, .article-title:hover{
+	text-decoration: none;
+	font-family: Ubuntu;		
+	color: #fff;
+}
+
+.Update-button, .Update-button:hover{
+	text-decoration: none;
+	font-family: Ubuntu;		
+	color: #fff;
+}
+
+.hyperlink-off, .hyperlink-off:hover{
+	text-decoration: none;
+	font-family: Ubuntu;		
+	color: #fff;
+}
+
+.account-img {
+	width: 125px;
+	height: 125px;
+}
+
+.art-img{
+	width: 100px;
+	height: 100px;
+}
+
+.account-heading {
+	font-size: 2.5rem;
+}
+
+/
