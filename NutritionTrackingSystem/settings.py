@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     #New apps
-    'crispy_forms',
+    'crispy_forms',    
+    'rest_framework',
     'Food',
 ]
 
@@ -130,3 +131,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'files/media')
 MEDIA_URL = '/media/'
 
 Crispy_Templata_Pack = 'bootstrap4'
+
+
+API_KEY = os.environ.get('Nutrition_API_Key')
+API_URL = os.environ.get('Nutrition_API_URL')

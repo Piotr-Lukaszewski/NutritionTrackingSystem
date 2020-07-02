@@ -17,10 +17,11 @@ from django.contrib import admin
 from django.urls import path, include
 from Food.views import home_view
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", home_view, name="home_view"),
     path("food/", include("Food.urls")),
+    path("api/", include("Food.api.urls")),
+
 
 ]

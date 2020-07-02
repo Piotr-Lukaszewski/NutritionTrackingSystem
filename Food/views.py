@@ -11,8 +11,25 @@ def home_view(request):
 	context = {}
 	return render(request, "home.html", context)
 
+
 class ProductsTableView(ListView, SuccessMessageMixin):
     template_name = "Food/product_list.html"
     model = Product
     context_object_name = "objects" # by default objects
     paginate_by = 10
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
