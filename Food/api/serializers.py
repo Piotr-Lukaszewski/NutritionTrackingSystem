@@ -5,12 +5,12 @@ from ..models import Ingredient, Product, ReceipeIngredient
 
 
 class IngredientSerializer(serializers.ModelSerializer):
-	name = serializers.CharField(max_length=50, unique=True)
+	name = serializers.CharField(max_length=50)
 	protein = serializers.FloatField()
 	carbohydrates = serializers.FloatField()
 	fat = serializers.FloatField()
-	quantity_per_portion = serializers.IntegerField(blank=True)
-	price = serializers.DecimalField(max_digits=100, decimal_places=2, blank=True)
+	quantity_per_portion = serializers.IntegerField()
+	price = serializers.DecimalField(max_digits=100, decimal_places=2)
 
 
 	def create(self):
@@ -28,6 +28,6 @@ class IngredientSerializer(serializers.ModelSerializer):
 
 @api_view
 def preview_response():	
-	end_point = settings.API_URL	
+	end_point = "temp"	
 	food_data = requests.get(url=end_point, params={"query":"Cheddar cheese"}).json()
 
