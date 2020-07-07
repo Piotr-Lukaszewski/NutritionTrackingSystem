@@ -1,0 +1,21 @@
+{% extends 'main.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <div class="content-section">
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group mx-5">
+	        	<a class="btn btn-secondary" href="#">
+	        		Create new ingredient from scratch by yourself
+	        	</a>
+	        	<a class="btn btn-secondary" href="{% url 'food_api:ingredinet_search' %}">
+	        		Import ingredient from FatSecret
+	        	</a>
+            </div>          
+        </form>
+    </div>
+
+{% endblock %}
+
