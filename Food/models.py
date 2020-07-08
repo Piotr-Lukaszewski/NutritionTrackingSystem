@@ -49,6 +49,11 @@ class Ingredient(models.Model):
 	def slug(self):
 		return "".join(["-" if x == " " else x for x in self.name])
 
+	@property
+	def food_type(self):
+		return self.__class__name__
+	
+
 	class Meta:
 		ordering = ["id"]
 
@@ -66,6 +71,9 @@ class Product(models.Model):
 	def __str__(self):
 		return f"{self.name}"
 
+	@property
+	def food_type(self):
+		return self.__class__name__
 
 	@property
 	def total_protein(self):

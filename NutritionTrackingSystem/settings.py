@@ -36,10 +36,11 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'django.contrib.staticfiles',    
     #New apps
     'crispy_forms',    
     'rest_framework',
+    #My apps
     'Food',
 ]
 

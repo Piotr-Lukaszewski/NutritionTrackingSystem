@@ -11,8 +11,6 @@ def home_view(request):
 	context = {}
 	return render(request, "home.html", context)
 
-def ingredient_creation_choice(request):
-	return render(request, "Food/ingredient_choice.html", {})
 
 class ProductsTableView(ListView, SuccessMessageMixin):
     template_name = "Food/product_list.html"

@@ -1,10 +1,11 @@
 from rest_framework import serializers
-from rest_framework.decorators import api_view
+#from rest_framework.decorators import api_view
 
 from ..models import Ingredient, Product, ReceipeIngredient
 
 
 class IngredientSerializer(serializers.ModelSerializer):
+
 	name = serializers.CharField(max_length=50)
 	protein = serializers.FloatField()
 	carbohydrates = serializers.FloatField()
@@ -13,6 +14,8 @@ class IngredientSerializer(serializers.ModelSerializer):
 	price = serializers.DecimalField(max_digits=100, decimal_places=2)
 
 
+	
+	
 	def create(self):
 		return Ingredient.objects.create(validated_data)
 
@@ -26,8 +29,5 @@ class IngredientSerializer(serializers.ModelSerializer):
 		fields = ("name", "protein", "carbohydrates", "fat", "quantity_per_portion", "price")
 
 
-@api_view
-def preview_response():	
-	end_point = "temp"	
-	food_data = requests.get(url=end_point, params={"query":"Cheddar cheese"}).json()
+
 

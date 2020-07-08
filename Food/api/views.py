@@ -2,6 +2,10 @@ from rest_framework.views import APIView
 from rest_framework import generics, filters
 from rest_framework.response import Response
 import requests, json, os
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
 
 from .serializers import IngredientSerializer
 from ..models import Ingredient
@@ -27,7 +31,6 @@ class IngredientImport(APIView):
 
 	"""
 
-
 	def get_authorization_token(self):
 		request_token_url = "https://oauth.fatsecret.com/connect/token"
 		consumer_key = os.environ.get('NTS_Client_ID')
@@ -42,7 +45,6 @@ class IngredientImport(APIView):
 		    auth=(consumer_key, consumer_secret)
 		)
 		return access_token_response.json()["access_token"]
-
 
 
 	def get_list_by_name(self, name, access_token):
