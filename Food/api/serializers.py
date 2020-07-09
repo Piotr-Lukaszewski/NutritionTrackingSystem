@@ -1,5 +1,4 @@
 from rest_framework import serializers
-#from rest_framework.decorators import api_view
 
 from ..models import Ingredient, Product, ReceipeIngredient
 
@@ -13,21 +12,13 @@ class IngredientSerializer(serializers.ModelSerializer):
 	quantity_per_portion = serializers.IntegerField()
 	price = serializers.DecimalField(max_digits=100, decimal_places=2)
 
-
 	
-	
-	def create(self):
-		return Ingredient.objects.create(validated_data)
-
-	def update(self):
-		instance.title = validated_data.get()
 
 
 	class Meta:
 		model = Ingredient
 		# fields = "_-all__" # returns all fields
-		fields = ("name", "protein", "carbohydrates", "fat", "quantity_per_portion", "price")
-
+		fields = ("name", "protein", "carbohydrates", "fat", "quantity_per_portion", "price", "id")
 
 
 
