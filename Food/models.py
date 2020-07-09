@@ -34,6 +34,7 @@ class Ingredient(models.Model):
 	fat = models.FloatField()
 	quantity_per_portion = models.IntegerField(blank=True)
 	price = models.DecimalField(max_digits=100, decimal_places=2, blank=True)
+	food_type = models.CharField(max_length=2, choices=FOOD_TYPE_CHOICES, blank=True)
 
 
 	def __str__(self):
@@ -48,10 +49,6 @@ class Ingredient(models.Model):
 	@property
 	def slug(self):
 		return "".join(["-" if x == " " else x for x in self.name])
-
-	@property
-	def food_type(self):
-		return self.__class__name__
 	
 
 	class Meta:

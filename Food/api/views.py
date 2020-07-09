@@ -143,32 +143,3 @@ class IngredientImport(APIView):
 	def response_validator(response):
 		pass
 
-
-
-
-
-
-
-
-
-
-
-# class IngredientListAPI(APIView):
-# 	"""
-# 		Class providing an access to our ingredient db.
-# 		It returns the whole list of objects and also allows to 
-# 		create new ones.
-# 	"""
-
-
-# 	def get(self, request):
-# 		ingredient = Ingredient.objects.all()
-# 		serializer = IngredientSerializer(ingredient, many=True)
-# 		return Response(serializer.data)
-
-# 	def post(self, request):
-# 		serializer = IngredientSerializer(data=request.data)
-# 		if serializer.is_valid():
-# 			serializer.save()
-# 			return Response(serializer.data, status=status.HTTP_201_CREATED)
-# 		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

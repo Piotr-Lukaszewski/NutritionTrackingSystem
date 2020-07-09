@@ -22,8 +22,7 @@ urlpatterns = [
     path("", home_view, name="home_view"),
     #NEW APPLICATION URLS
     path("food/", include("Food.urls")),
+    path("profiles/", include("Account.urls")),
     #REST FRAMEWORK URLS
     path("api/", include("Food.api.urls")),
-
-
 ]

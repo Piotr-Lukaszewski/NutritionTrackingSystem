@@ -1,0 +1,52 @@
+{% extends 'main.html' %}
+
+{% block content %}	
+	<h1 id="title">Calories tables </h1>
+	<table class="table table-striped table-dark">
+
+		<thead>
+			<tr>
+				<th scope="col">Username</th>
+				<th scope="col">Calories target</th>
+				<th scope="col">Type of a diet</th>
+				<th scope="col">date joined</th>
+			</tr>
+		</thead>
+
+		<tbody>	
+			{% for profile in objects %}
+				<tr>					
+					<td>{{profile.username}}</td>
+					<td>{{profile.calories_plan}}</td>
+					<td>{{profile.get_diet_type_display}}</td>
+					<td>{{profile.date_joined}}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+
+	</table>
+
+
+	{% if is_paginated %}
+
+		{% if page_obj.has_previous and  page_obj.paginator.num_pages > 2 %}
+			<a href="?page=1" class="hyperlink-off"><<</a>
+		{% endif %}
+
+		{% for num in page_obj.paginator.page_range %}
+
+			{% if  page_obj.number == num %}
+				<strong><u><a href="?page={{num}}" class="hyperlink-off">{{num}}</a></u></strong>
+			{% elif num > page_obj.number|add:-3 and num < page_obj.number|add:3 %}
+				<a href="?page={{num}}" class="hyperlink-off">{{num}}</a>
+			{% endif %}
+
+		{% endfor %}
+
+		{% if page_obj.paginator.num_pages >= 3 and page_obj.number != page_obj.paginator.num_pages %}
+			<a class="hyperlink-off" href="?page={{page_obj.paginator.num_pages}}">>></a>
+		{% endif %}
+
+	{% endif %}
+
+{% endblock %}

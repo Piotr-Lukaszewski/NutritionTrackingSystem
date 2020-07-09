@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django_filters',
     #My apps
     'Food',
+    'Account',
 ]
 
 REST_FRAMEWORK = {
@@ -50,6 +51,7 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10,
 }
 
+AUTH_USER_MODEL = 'Account.Profile'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
