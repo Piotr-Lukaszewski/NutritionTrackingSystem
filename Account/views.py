@@ -13,6 +13,6 @@ class ProfilesListView(ListView, SuccessMessageMixin):
 	context_object_name = "objects"
 
 class ProfileDetailView(DetailView, SuccessMessageMixin):
-	pass
-
+	model = Profile
+	context_object_name = "objects"
 

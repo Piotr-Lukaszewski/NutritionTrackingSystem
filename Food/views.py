@@ -13,14 +13,21 @@ def home_view(request):
 
 
 class ProductsTableView(ListView, SuccessMessageMixin):
-    template_name = "Food/product_list.html"
-    model = Product
-    context_object_name = "objects" 
-    paginate_by = 10
+	template_name = "Food/product_list.html"
+	model = Product
+	context_object_name = "objects" 
+	paginate_by = 10
 
 
+class SearchResultsView(ListView, SuccessMessageMixin):
+	template_name = "Food/search_results.html"
+	model = Product
+	context_object_name = "products" 	
 
-   
+	def get_queryset(self):
+		query = self.request.GET.get("word")
+		product_list = Product.objects.filter(name__icontains=query)
+		return product_list
 
 
 

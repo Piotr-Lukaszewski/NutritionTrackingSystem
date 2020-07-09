@@ -4,7 +4,7 @@
 	<h1 id="title">Calories tables </h1>
 
 	<form action="{% url 'food:search_results' %}" method="get">
-		<input name="word" type="text" placeholder="Search">
+		<input name="word" type="text" placeholder="">
 	</form>
 
 	<table class="table table-striped table-dark">
@@ -22,16 +22,16 @@
 		</thead>
 
 		<tbody>	
-			{% for item in objects %}
+			{% for prod in products %}
 				<tr>
 					<td>
-						<a class="hyperlink-off" href="#">{{ item.name|capfirst }}</a>	
+						<a class="hyperlink-off" href="#">{{ prod.name|capfirst }}</a>	
 					</td>						
-					<td>{{item.total_protein}}</td>
-					<td>{{item.total_carbohydrates}}</td>
-					<td>{{item.total_fat}}</td>
-					<td>{{item.total_weight}}</td>
-					<td>{{item.total_price}}</td>
+					<td>{{prod.total_protein}}</td>
+					<td>{{prod.total_carbohydrates}}</td>
+					<td>{{prod.total_fat}}</td>
+					<td>{{prod.total_weight}}</td>
+					<td>{{prod.total_price}}</td>
 					<td>									 
 						<button type="button" class="btn btn-secondary">
 							<a class="hyperlink-off" href="#">Add</a>
