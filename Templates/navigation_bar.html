@@ -24,13 +24,13 @@
 
 					<div class="dropdown-menu" aria-labelledby="submenu">
 						{% if request.user.is_authenticated %}						
-  						<a class="dropdown-item" href="{% url 'food:prod_table' %}">Product table</a>	  											
- 						{% endif %}
-	 						<a class="dropdown-item" href="#">Add new ingredient</a>
-	 						{% if request.user.is_authenticated %}	
-	 						<a class="dropdown-item" href="#">Create new meal</a>
-	 						<a class="dropdown-item" href="#">Import ingredient</a>
- 						{% endif %}
+							<a class="dropdown-item" href="{% url 'food:prod_table' %}">Product table</a>
+						{% endif %}
+						<a class="dropdown-item" href="#">Add new ingredient</a>
+						{% if request.user.is_authenticated %}	
+							<a class="dropdown-item" href="#">Create new meal</a>
+							<a class="dropdown-item" href="#">Import ingredient</a>
+						{% endif %}
 					</div>				
 				</li>
 
@@ -41,7 +41,7 @@
 					<div class="dropdown-menu" aria-labelledby="submenu">
 						<a class="dropdown-item" href="#">All articles</a>
 						{% if request.user.is_authenticated %}	
-						<a class="dropdown-item" href="#">Add article</a>
+							<a class="dropdown-item" href="#">Add article</a>
 						{% endif %}
 					</div>									
 				</li>
@@ -49,21 +49,21 @@
 				<li class="nav-item px-md-5">
 					<a  class="nav-link " href="#">Contact</a>					
 				</li>
-				<!--  -->
+
 				{% if request.user.is_authenticated %}
 
 					<li class="nav-item dropdown px-md-5">
 						<a  class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" 
 						id="submenu" aria-haspopup="true" href="#">Profile</a>	
 
-					<div class="dropdown-menu" aria-labelledby="submenu">
-						<a  class="dropdown-item" href="#">Edit Profile</a>	
-						<a  class="dropdown-item" href="#">Diet</a>						
-					</div>				
+						<div class="dropdown-menu" aria-labelledby="submenu">
+							<a  class="dropdown-item" href="#">Edit Profile</a>	
+							<a  class="dropdown-item" href="#">Diet</a>						
+						</div>				
 					</li>
 
 				{% endif %}
-				<!--  -->
+
 				{% if request.user.is_authenticated %}
 					<li class="nav-item px-md-5">
 						<a  class="nav-link" href="#">Profile</a>					
@@ -73,10 +73,11 @@
 
 			<div class="navbar-nav">
 				{% if request.user.is_authenticated %}
-					<a class="nav-item nav-link" href="#">Logout</a>
+					<a class="nav-item nav-link" href="{% url 'profile:log_out' %}">Logout</a>
+					<a class="nav-item nav-link">Hello, {{request.user.username}} </a>
 				{% else %}
-					<a class="nav-item nav-link" href="#">Login</a>
-					<a class="nav-item nav-link" href="#">Register</a>
+					<a class="nav-item nav-link" href="{% url 'profile:log_in' %}">Login</a>
+					<a class="nav-item nav-link" href="{% url 'profile:registration' %}">Register</a>
 				{% endif %}
 			</div>
 

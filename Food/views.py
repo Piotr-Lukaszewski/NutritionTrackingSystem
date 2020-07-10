@@ -7,11 +7,6 @@ from django.urls import reverse_lazy
 from .models import Ingredient, Product, ReceipeIngredient
 
 
-def home_view(request):
-	context = {}
-	return render(request, "home.html", context)
-
-
 class ProductsTableView(ListView, SuccessMessageMixin):
 	template_name = "Food/product_list.html"
 	model = Product
