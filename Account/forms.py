@@ -11,7 +11,7 @@ class RegistrationForm(UserCreationForm):
 
 	class Meta:
 		model = Profile
-		fields = ["email", "username", "password", "calories_plan", "diet_type"]
+		fields = ("email", "username", "calories_plan", "diet_type")
 
 
 class AuthenticationForm(forms.ModelForm):
@@ -23,10 +23,36 @@ class AuthenticationForm(forms.ModelForm):
 		fields = ("username", "password")
 
 	def clean(self):
-		username = self.cleaned_data["username"]
-		password = self.cleaned_data["password"]
-		if not authenticate(username=username, password=password):
-			raise forms.ValidationError("Invalid login")
+		#Functions runs automatically with each usage of AuthenticationForm class
+		if self.is_valid():
+			username = self.cleaned_data["username"]
+			password = self.cleaned_data["password"]
+			if not authenticate(username=username, password=password):
+				raise forms.ValidationError("Invalid login")
 
+
+class ProfileUpdateForm(forms.ModelForm):
+
+	def clean_email(self):
+		if self.is_valid():
+			email = self.cleaned_data["email"]
+			try:
+				profile = Profile.objects.excluce(pk=self.instance.pk).get(email=email)
+			except Profile.DoesNotExist:
+				return email
+			raise forms.ValidationError(f"Email {email} is already in use")
+
+	def clean_username(self):
+		if self.is_valid():
+			username = self.cleaned_data["username"]
+			try:
+				profile = Profile.objects.excluce(pk=self.instance.pk).get(username=username)
+			except Profile.DoesNotExist:
+				return username
+			raise forms.ValidationError(f"Username {username} is already in use")
+			
+	class Meta:
+		model = Profile
+		fields = ("username", "calories_plan", "diet_type", "email")
 
 

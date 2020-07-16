@@ -1,0 +1,18 @@
+{% extends 'main.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+	<div class="content-section col-md-4 container-fluid">
+		<form method="GET" enctype="multipart/form-data">
+			<fieldset class="form-group">
+				<legend class=border-bottom mb-4>Profile info</legend>
+					{{ profile_form|crispy }}	
+			</fieldset>
+			<div class="form-group">
+				<button class="btn btn-outline-info" type="submit">Save</button>
+			</div>			
+		</form>
+	</div>
+
+{% endblock %}

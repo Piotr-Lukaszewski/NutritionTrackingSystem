@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
+from Food.models import Product
+
 DIET_TYPE_CHOICES = [
 	("1", "Vegan"),
 	("2", "Vegeterian"),
@@ -16,9 +18,9 @@ class MyAccountManager(BaseUserManager):
 	"""
 	def create_user(self, email, username, password=None):
 		if not email:
-			raise ValueError('Users must have an email address')
+			raise ValueError("Users must have an email address")
 		if not username:
-			raise ValueError('Users must have a username')
+			raise ValueError("Users must have a username")
 
 		user = self.model(
 			email=self.normalize_email(email),
@@ -48,7 +50,7 @@ class Profile(AbstractBaseUser):
 
 	"""
 	email 					= models.EmailField(verbose_name="email", max_length=60, unique=True)
-	username 				= models.CharField(max_length=30, unique=True)
+	username 				= models.CharField(verbose_name="username", max_length=30, unique=True)
 	calories_plan			= models.IntegerField(default=2500)
 	diet_type               = models.CharField(max_length=2, default="5", choices=DIET_TYPE_CHOICES)
 	is_admin				= models.BooleanField(default=False)
@@ -65,10 +67,24 @@ class Profile(AbstractBaseUser):
 	objects = MyAccountManager()
 
 	def __str__(self):
-		return self.username
+		return "".join([i.lower().capitalize() + " " for i in self.username.split()])[:-1]
 
 	def has_perm(self, perm, obj=None):
 		return self.is_admin
 
 	def has_module_perms(self, app_label):
 		return True
+
+
+
+
+
+# class DietPosition(models.Model):
+
+# 	profile_user = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True) 
+# 	date = models.TimeField(auto_now=True)
+# 	diet_prod = models.ManyToManyField(Product, related_name="diet_set")
+# 	prod_weight = models.IntegerField(default=100) 
+
+
+
