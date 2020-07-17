@@ -7,7 +7,7 @@
         <form method="POST">
             {% csrf_token %}
             <div class="form-group mx-5">
-	        	<a class="btn btn-secondary" href="#">
+	        	<a class="btn btn-secondary" href="{% url 'food_api:ingredinet_create' %}">
 	        		Create new ingredient from scratch by yourself
 	        	</a>
 	        	<a class="btn btn-secondary" href="{% url 'food_api:ingredinet_search' %}">

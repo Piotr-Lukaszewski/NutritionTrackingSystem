@@ -63,6 +63,7 @@ class Product(models.Model):
 	"""
 	name = models.CharField(max_length=50)
 	ingredient = models.ManyToManyField(Ingredient, through="ReceipeIngredient")
+	ingredinet_based = models.BooleanField(default=False)
 
 
 	def __str__(self):

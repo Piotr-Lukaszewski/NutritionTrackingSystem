@@ -1,7 +1,7 @@
 {% extends 'main.html' %}
 
 {% block content %}	
-	<h1 id="title">Calories tables </h1>
+	<h1 id="title"> Ingredients </h1>
 
 	<form action="{% url 'food:search_results' %}" method="get">
 		<input name="word" type="text" placeholder="Search">
@@ -11,32 +11,20 @@
 
 		<thead>
 			<tr>
-				<th scope="col">Product name</th>
-				<th scope="col">Proteins</th>
-				<th scope="col">Carbohydrates</th>
-				<th scope="col">Fat</th>
-				<th scope="col">Quantity per portion</th>
-				<th scope="col">Price</th>
-				<th scope="col">Add</th>
+				<th scope="col">Name</th>
+				<th scope="col">Add to recipe</th>
 			</tr>
 		</thead>
 
 		<tbody>	
-			{% for item in objects %}
+			{% for item in ingredients %}
 				<tr>
 					<td>
-						<a class="hyperlink-off" href="{% url 'food:prod_detail' item.pk %}">
-							{{ item.name|capfirst }}
-						</a>
+						{{ item.name|capfirst }}	
 					</td>						
-					<td>{{item.total_protein}}</td>
-					<td>{{item.total_carbohydrates}}</td>
-					<td>{{item.total_fat}}</td>
-					<td>{{item.total_weight}}</td>
-					<td>{{item.total_price}}</td>
 					<td>									 
 						<button type="button" class="btn btn-secondary">
-							<a class="hyperlink-off" href="#">Add</a>
+							<a class="hyperlink-off" href="{% url 'food:create_recipe' prod_pk item.pk %}">Add</a>
 						</button>													
 					</td>
 				</tr>

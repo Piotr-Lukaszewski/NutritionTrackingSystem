@@ -1,0 +1,28 @@
+{% extends 'main.html' %}
+
+{% block content %}
+    <h1>
+        Product details
+    </h1>
+
+	<div class="post">
+
+        <h2>{{object.name|lower|capfirst}}</h2>
+
+        <p>{{ object.total_protein }} grams of protein per portion</p>      
+        <p>{{ object.total_carbohydrates }} grams of carbohydrates per portion</p> 
+        <p>{{ object.total_fat }}  grams of fat per portion</p>   
+        <p>{{ object.total_weight }} estimated weight for one portion of product</p>    
+        <p>{{ object.total_price }} estimated price for the meal</p>  
+
+    </div>
+    <br><br><br><br><br>
+	<button class="btn btn-secondary mr-1" type="submit">
+		<a class="Update-button" href="{% url 'food:ingredient_table' object.pk %}">Edit</a>
+	</button>
+        <button class="btn btn-danger ml-1" type="submit">
+        <a class="Update-button" href="#">Delete</a>
+    </button>
+
+
+{% endblock %}

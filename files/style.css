@@ -8,18 +8,23 @@ body{
 }
 
 footer {
-
-	background: #414445;/*rgba(25, 27, 27, 0.8)*/
-    position: fixed; 
-    padding: 10px 10px 0px 10px; 
+	background: #414445;
+	padding: 10px 10px 0px 10px;
+    position: fixed;     
     bottom: 0; 
     width: 100%; 
+    /*rgba(25, 27, 27, 0.8)*/
     /*	box-shadow: 0 50vh 0 50vh #414445;
+    fixed
 	padding: 30px;
 	margin-top: 10px;
 	background: #292b2c;*/
 }
 
+.main{
+	min-height: 100vh;
+	height: 100%;	
+}
 
 #navbargroup{
 	padding-bottom: 50px;
