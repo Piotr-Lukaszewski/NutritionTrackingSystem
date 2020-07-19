@@ -22,11 +22,6 @@
 
     {% if request.user.is_admin or request.user.is_staff %}
 
-        {% if object.ingredinet_based == False %}
-        	<button class="btn btn-secondary" type="submit">
-        		<a class="Update-button" href="{% url 'food:ingredient_table' object.pk %}">Update recipe</a>
-        	</button>
-        {% endif %}
 
         <button class="btn btn-info ml-3 mr-3" type="submit">
             <a class="Update-button" href="{% url 'food:update_prod' object.pk %}">
@@ -35,7 +30,9 @@
         </button>
    
         <button class="btn btn-danger" type="submit">
-            <a class="Update-button" href="{% url 'food:delete_prod' object.pk %}">Delete</a>
+            <a class="Update-button" href="{% url 'food:delete_prod' object.pk %}">
+                Delete
+            </a>
         </button>
 
     {% endif %}

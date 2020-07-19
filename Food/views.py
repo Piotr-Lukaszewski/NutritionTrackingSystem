@@ -10,24 +10,12 @@ from .forms import IngredientForm, ProductCreationForm
 
 #########Products + recipes#####################
 
-class ProductUpdateView(UpdateView, SuccessMessageMixin):
-    model = Product
-    template_name = "Food/product_update.html"    
-    fields = ["name", "recipe"]
-    # if ingredinet_based equal to True then turn off adding recipe. 
-
-    def get_context_data(self, **kwargs):      
-        message = messages.success(self.request, f"Product description updated") 
-        context = super().get_context_data(**kwargs)
-        context['message'] = message
-        return context
 
 class ProductsTableView(ListView, SuccessMessageMixin):
 	template_name = "Food/product_list.html"
 	model = Product
 	context_object_name = "objects" 
 	paginate_by = 10
-
 
 class SearchResultsView(ListView, SuccessMessageMixin):
 	template_name = "Food/search_results.html"
@@ -44,8 +32,29 @@ class ProductDetailView(DetailView):
 	model = Product
 	context_object_name = "object"
 
+class ProductUpdateView(UpdateView, SuccessMessageMixin):
+    model = Product
+    template_name = "Food/product_update.html"    
+    fields = ["name", "recipe"]
+    # if ingredinet_based equal to True then turn off adding recipe. 
+
+    def get_context_data(self, **kwargs):      
+        message = messages.success(self.request, f"Product description updated") 
+        context = super().get_context_data(**kwargs)
+        context['message'] = message
+        return context
+
+class ProductDeleteView(DeleteView):
+	model = Product
+	template_name = "Food/product_delete.html"
+	success_url = reverse_lazy("food:prod_table")
+	context_object_name = "object"
+
 
 def create_product(request):
+	"""
+		Creates new product.
+	"""
 	context = {}
 	if request.POST:
 		form = ProductCreationForm(request.POST)
@@ -61,18 +70,21 @@ def create_product(request):
 		context["form"] = form
 	return render(request, "Food/create_meal.html", context)
 
-
 def add_ingredient(request, pk):
 	"""		
 		Display a list of all available ingredients, with the possibility to add to a recipe for a previously created recipe.
-	"""
+	"""	
 	context = {}
+	product = Product.objects.get(pk=pk)
 	context["prod_pk"] = pk	
 	context["ingredients"] = Ingredient.objects.all()
+	context["recipe"] = ReceipeIngredient.objects.filter(product=product)
 	return render(request, "Food/ingredient_table.html", context)
 
-
 def create_recipe(request, prod_pk, ing_pk):
+	"""		
+		Adds ingredients to a recipe combined with a previously created product.
+	"""
 	product = Product.objects.get(pk=prod_pk)
 	ingredient = Ingredient.objects.get(pk=ing_pk)
 
@@ -91,8 +103,8 @@ def create_recipe(request, prod_pk, ing_pk):
 	return HttpResponse(status=204)
 
 
-
 #######Ingredients##########
+
 
 class CreateIngredient(CreateView):
 	template_name = "Food/ingredient_add.html"
@@ -132,5 +144,14 @@ class CreateIngredient(CreateView):
 		return redirect("food:prod_table")
 
 
+class IngredientDetailView(DetailView):
+	template_name = "Food/ingredient_detail_view.html"
+	model = Ingredient
+	context_object_name = "object"
 
 
+class ProductsTableView(ListView, SuccessMessageMixin):
+	template_name = "Food/ingredient_list.html"
+	model = Ingredient
+	context_object_name = "objects" 
+	paginate_by = 10

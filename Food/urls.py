@@ -5,6 +5,7 @@ from .views import (
 					CreateIngredient, 
                     ProductUpdateView,
                     ProductDetailView,
+                    ProductDeleteView,
 					create_product,
 					add_ingredient,
 					create_recipe,
@@ -14,10 +15,12 @@ from .views import (
 app_name = "food"
 
 urlpatterns = [
+    #Product part
     path("prod_table/", ProductsTableView.as_view(), name="prod_table"),
     path("prod_detail/<int:pk>", ProductDetailView.as_view(), name="prod_detail"),
     path('search/', SearchResultsView.as_view(), name="search_results"),
     path("prod_update/<int:pk>",ProductUpdateView.as_view(), name="update_prod"),
+    path("delete/<int:pk>", ProductDeleteView.as_view(), name="delete_prod"),
     #Ingredients part
     path("ingredient_add/", CreateIngredient.as_view(), name="ingredinet_create"),
     #Meal & recipe part
