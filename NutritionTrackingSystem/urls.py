@@ -12,6 +12,7 @@ urlpatterns = [
     #REST FRAMEWORK URLS
     path("api/", include("Food.api.urls")),
     #Email built-in aps
+    #https://github.com/django/django/blob/master/django/contrib/auth/views.py
 	path(
 		"password_reset/", 
 		views.PasswordResetView.as_view(template_name="Account/password_reset.html"), 

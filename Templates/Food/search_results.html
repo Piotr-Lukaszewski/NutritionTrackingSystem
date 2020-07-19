@@ -22,16 +22,18 @@
 		</thead>
 
 		<tbody>	
-			{% for prod in products %}
+			{% for item in products %}
 				<tr>
 					<td>
-						<a class="hyperlink-off" href="#">{{ prod.name|capfirst }}</a>	
+						<a class="hyperlink-off" href="{% url 'food:prod_detail' item.pk %}">
+							{{ item.name|capfirst }}
+						</a>	
 					</td>						
-					<td>{{prod.total_protein}}</td>
-					<td>{{prod.total_carbohydrates}}</td>
-					<td>{{prod.total_fat}}</td>
-					<td>{{prod.total_weight}}</td>
-					<td>{{prod.total_price}}</td>
+					<td>{{item.total_protein}}</td>
+					<td>{{item.total_carbohydrates}}</td>
+					<td>{{item.total_fat}}</td>
+					<td>{{item.total_weight}}</td>
+					<td>{{item.total_price}} $</td>
 					<td>									 
 						<button type="button" class="btn btn-secondary">
 							<a class="hyperlink-off" href="#">Add</a>

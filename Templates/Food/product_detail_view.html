@@ -1,13 +1,14 @@
 {% extends 'main.html' %}
 
 {% block content %}
-    <h1>
-        Product details
-    </h1>
+
 
 	<div class="post">
 
-        <h2>{{object.name|lower|capfirst}}</h2>
+        <h1>{{object.name|lower|capfirst}}</h1>
+        <br><br><br>
+
+        <p>{{ object.recipe }}</p>
 
         <p>{{ object.total_protein }} grams of protein per portion</p>      
         <p>{{ object.total_carbohydrates }} grams of carbohydrates per portion</p> 
@@ -17,10 +18,20 @@
 
     </div>
     <br><br><br><br><br>
-	<button class="btn btn-secondary mr-1" type="submit">
-		<a class="Update-button" href="{% url 'food:ingredient_table' object.pk %}">Edit</a>
-	</button>
-        <button class="btn btn-danger ml-1" type="submit">
+
+    {% if object.ingredinet_based == False %}
+    	<button class="btn btn-secondary" type="submit">
+    		<a class="Update-button" href="{% url 'food:ingredient_table' object.pk %}">Update recipe</a>
+    	</button>
+    {% endif %}
+
+    <button class="btn btn-info ml-3 mr-3" type="submit">
+        <a class="Update-button" href="{% url 'food:update_prod' object.pk %}">
+            Edit
+        </a>
+    </button>
+
+    <button class="btn btn-danger" type="submit">
         <a class="Update-button" href="#">Delete</a>
     </button>
 

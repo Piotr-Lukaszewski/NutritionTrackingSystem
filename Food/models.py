@@ -64,6 +64,7 @@ class Product(models.Model):
 	name = models.CharField(max_length=50)
 	ingredient = models.ManyToManyField(Ingredient, through="ReceipeIngredient")
 	ingredinet_based = models.BooleanField(default=False)
+	recipe = models.CharField(max_length=500, blank=True)
 
 
 	def __str__(self):
@@ -79,7 +80,7 @@ class Product(models.Model):
 		result = 0
 		for i in product.ingredient.all():
 			result += i.protein * ReceipeIngredient.objects.get(ingredient=i, product=product).weight / 100
-		return result
+		return round(result,2)
 
 	@property   
 	def total_carbohydrates(self):
@@ -87,7 +88,7 @@ class Product(models.Model):
 		result = 0
 		for i in product.ingredient.all():
 			result += i.carbohydrates * ReceipeIngredient.objects.get(ingredient=i, product=product).weight / 100
-		return result
+		return round(result,2)
 
 	@property   
 	def total_fat(self):
@@ -95,7 +96,7 @@ class Product(models.Model):
 		result = 0
 		for i in product.ingredient.all():
 			result += i.fat * ReceipeIngredient.objects.get(ingredient=i, product=product).weight / 100
-		return result
+		return round(result,2)
 
 
 	@property 
@@ -104,7 +105,7 @@ class Product(models.Model):
 		result = 0
 		for i in product.ingredient.all():
 			result += i.price * ReceipeIngredient.objects.get(ingredient=i, product=product).weight / 100
-		return result
+		return round(result,2)
 
 	@property
 	def total_weight(self):
@@ -119,7 +120,7 @@ class ReceipeIngredient(models.Model):
 	weight = models.IntegerField(null=True, blank=True)
 
 	def __str__(self):
-		return f"{self.ingredient.name}  - {self.weight}"
+		return f"{self.product.name}- {self.ingredient.name}"
 
 	def save(self, *args, **kwargs):
 		if self.weight is None:
