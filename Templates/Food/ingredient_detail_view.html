@@ -10,11 +10,12 @@
 
         <p>{{ object.recipe }}</p>
 
-        <p>{{ object.total_protein }} grams of protein per portion</p>      
-        <p>{{ object.total_carbohydrates }} grams of carbohydrates per portion</p> 
-        <p>{{ object.total_fat }}  grams of fat per portion</p>   
-        <p>{{ object.total_weight }} estimated weight for one portion of product</p>    
-        <p>{{ object.total_price }} estimated price for the meal</p>  
+        <p>{{ object.protein }} grams of protein per portion</p>      
+        <p>{{ object.carbohydrates }} grams of carbohydrates per portion</p> 
+        <p>{{ object.fat }}  grams of fat per portion</p>   
+        <p>{{ object.weight }} estimated weight for one portion of product</p>    
+        <p>{{ object.price }} estimated price for the meal</p>  
+        <p>{{ object.food_type }} estimated price for the meal</p> 
 
     </div>
     
@@ -24,13 +25,13 @@
 
 
         <button class="btn btn-info ml-3 mr-3" type="submit">
-            <a class="Update-button" href="{% url 'food:update_prod' object.pk %}">
+            <a class="Update-button" href="{% url 'food:ingredient_update' object.pk %}">
                 Edit
             </a>
         </button>
    
         <button class="btn btn-danger" type="submit">
-            <a class="Update-button" href="{% url 'food:delete_prod' object.pk %}">
+            <a class="Update-button" href="{% url 'food:ingredient_delete' object.pk %}">
                 Delete
             </a>
         </button>

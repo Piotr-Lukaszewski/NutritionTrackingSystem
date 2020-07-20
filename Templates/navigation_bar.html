@@ -23,12 +23,24 @@
 					id="submenu" aria-haspopup="true" href="#">Food</a>	
 
 					<div class="dropdown-menu" aria-labelledby="submenu">					
-						<a class="dropdown-item" href="{% url 'food:prod_table' %}">Product table</a>
-						<a class="dropdown-item" href="{%  url 'food:ingredinet_create' %}">Add new ingredient</a>
+						<a class="dropdown-item" href="{% url 'food:prod_table' %}">Product table</a>						
 						{% if request.user.is_authenticated %}	
 							<a class="dropdown-item" href="{% url 'food:meal_create' %}">Create new meal</a>
-							<a class="dropdown-item" href="#">Import ingredient</a>
+						{% endif %}						
+					</div>				
+				</li>
+
+				<li class="nav-item dropdown px-md-5">
+					<a  class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" 
+					id="submenu" aria-haspopup="true" href="#">Ingredients</a>	
+
+					<div class="dropdown-menu" aria-labelledby="submenu">	
+						<a class="dropdown-item" href="{% url 'food:ingredinet_table' %}">Ingredient table</a>
+						{% if request.user.is_authenticated %}	
+							<a class="dropdown-item" href="{%  url 'food:ingredinet_create' %}">Add new ingredient</a>
 						{% endif %}
+						<a class="dropdown-item" href="#">Import ingredient</a>
+						
 					</div>				
 				</li>
 

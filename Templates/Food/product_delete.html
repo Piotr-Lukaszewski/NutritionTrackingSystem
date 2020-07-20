@@ -12,7 +12,11 @@
             </fieldset>
             <div class="form-group">
                 <button class="btn btn-outline-danger" type="submit">Yes, I'm sure</button>
-                <button class="btn btn-outline-info" type="submit"><a href="{% url 'food:prod_detail' object.pk %}">No, take me back</a></button>
+                <button class="btn btn-outline-info" type="submit">
+                    <a href="{% url 'food:prod_detail' object.pk %}">
+                        No, take me back
+                    </a>
+                </button>
             </div>          
         </form>
     </div>

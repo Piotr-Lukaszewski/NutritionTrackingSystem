@@ -19,22 +19,24 @@
 				<th scope="col">Fat</th>
 				<th scope="col">Quantity per portion</th>
 				<th scope="col">Price</th>
+				<th scope="col">Type</th>
 			</tr>
 		</thead>
 
 		<tbody>	
-			{% for item in objects %}
+			{% for item in ingredients %}
 				<tr>
 					<td>
-						<a class="hyperlink-off" href="{% url 'food:prod_detail' item.pk %}">
+						<a class="hyperlink-off" href="{% url 'food:ingredinet_detail' item.pk %}">
 							{{ item.name|capfirst }}
 						</a>
 					</td>						
-					<td>{{item.total_protein}}</td>
-					<td>{{item.total_carbohydrates}}</td>
-					<td>{{item.total_fat}}</td>
-					<td>{{item.total_weight}}</td>
-					<td>{{item.total_price}} $</td>
+					<td>{{item.protein}}g</td>
+					<td>{{item.carbohydrates}}g</td>
+					<td>{{item.fat}}g</td>
+					<td>{{item.quantity_per_portion}} grams</td>
+					<td>{{item.price}} $</td>
+					<td>{{item.get_food_type_display}}</td>
 				</tr>
 			{% endfor %}
 		</tbody>

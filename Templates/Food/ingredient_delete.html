@@ -11,8 +11,14 @@
                 <h2>Are you sure you want to delete product: {{ object.name }} ?</h2>
             </fieldset>
             <div class="form-group">
-                <button class="btn btn-outline-danger" type="submit">Yes, I'm sure</button>
-                <button class="btn btn-outline-info" type="submit"><a href="{% url 'prod_detail' object.pk %}">No, take me back</a></button>
+                <button class="btn btn-outline-danger" type="submit">
+                    Yes, I'm sure
+                </button>
+                <button class="btn btn-outline-info" type="submit">
+                    <a href="{% url 'food:ingredinet_detail' object.pk %}">
+                        No, take me back
+                    </a>
+                </button>
             </div>          
         </form>
     </div>

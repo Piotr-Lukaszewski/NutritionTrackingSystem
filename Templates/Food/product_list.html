@@ -6,9 +6,9 @@
 	<form action="{% url 'food:search_results' %}" method="get">
 		<input name="word" type="text" placeholder="Search">
 	</form>
-
-	<br><br>
 	
+	<br><br>
+
 	<table class="table table-striped table-dark">
 
 		<thead>
@@ -24,12 +24,12 @@
 		</thead>
 
 		<tbody>	
-			{% for item in objects %}
+			{% for item in products %}
 				<tr>
 					<td>
 						<a class="hyperlink-off" href="{% url 'food:prod_detail' item.pk %}">
 							{{ item.name|capfirst }}
-						</a>
+						</a>	
 					</td>						
 					<td>{{item.total_protein}}</td>
 					<td>{{item.total_carbohydrates}}</td>

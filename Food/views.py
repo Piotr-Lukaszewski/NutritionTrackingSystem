@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+#https://github.com/django/django/blob/master/django/views/generic/list.py
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, FormView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
@@ -14,13 +15,15 @@ from .forms import IngredientForm, ProductCreationForm
 class ProductsTableView(ListView, SuccessMessageMixin):
 	template_name = "Food/product_list.html"
 	model = Product
-	context_object_name = "objects" 
+	context_object_name = "products" 	
 	paginate_by = 10
+
 
 class SearchResultsView(ListView, SuccessMessageMixin):
 	template_name = "Food/search_results.html"
 	model = Product
 	context_object_name = "products" 	
+	paginate_by = 10
 
 	def get_queryset(self):
 		query = self.request.GET.get("word")
@@ -32,17 +35,19 @@ class ProductDetailView(DetailView):
 	model = Product
 	context_object_name = "object"
 
-class ProductUpdateView(UpdateView, SuccessMessageMixin):
-    model = Product
-    template_name = "Food/product_update.html"    
-    fields = ["name", "recipe"]
-    # if ingredinet_based equal to True then turn off adding recipe. 
 
-    def get_context_data(self, **kwargs):      
-        message = messages.success(self.request, f"Product description updated") 
-        context = super().get_context_data(**kwargs)
-        context['message'] = message
-        return context
+class ProductUpdateView(UpdateView, SuccessMessageMixin):
+	# if ingredinet_based equal to True then turn off adding recipe. 
+	model = Product
+	template_name = "Food/product_update.html"    
+	fields = ["name", "recipe"]
+	success_url = reverse_lazy("food:prod_table")
+
+	def get_context_data(self, **kwargs):      
+		message = messages.success(self.request, f"Product description updated") 
+		context = super().get_context_data(**kwargs)
+		context['message'] = message
+		return context
 
 class ProductDeleteView(DeleteView):
 	model = Product
@@ -150,8 +155,30 @@ class IngredientDetailView(DetailView):
 	context_object_name = "object"
 
 
-class ProductsTableView(ListView, SuccessMessageMixin):
+class IngredientTableView(ListView, SuccessMessageMixin):
 	template_name = "Food/ingredient_list.html"
 	model = Ingredient
-	context_object_name = "objects" 
+	context_object_name = "ingredients" 
 	paginate_by = 10
+
+
+class IngredientUpdateView(UpdateView, SuccessMessageMixin): 
+	model = Ingredient
+	template_name = "Food/product_update.html"    
+	fields = ["name", "protein", "protein", "carbohydrates", "fat", "quantity_per_portion", "price", "food_type"]
+	success_url = reverse_lazy("food:prod_table")
+
+	def get_context_data(self, **kwargs):      
+		message = messages.success(self.request, f"Ingredient description updated") 
+		context = super().get_context_data(**kwargs)
+		context['message'] = message
+		return context
+
+
+class ProductDeleteView(DeleteView):
+	model = Ingredient
+	template_name = "Food/ingredient_delete.html"
+	success_url = reverse_lazy("food:ingredinet_table")
+	context_object_name = "object"
+
+
