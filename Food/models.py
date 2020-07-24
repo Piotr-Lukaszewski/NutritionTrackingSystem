@@ -75,28 +75,37 @@ class Product(models.Model):
 		return self.__class__name__
 
 	@property
+	def total_weight(self):
+		product = Product.objects.get(pk=self.pk)
+		result = sum([
+				ReceipeIngredient.objects.get(ingredient=i, product=product).weight for i in product.ingredient.all()
+			])
+		return int(result)
+
+	@property
 	def total_protein(self):
 		product = Product.objects.get(pk=self.pk)
 		result = 0
 		for i in product.ingredient.all():
-			result += i.protein * ReceipeIngredient.objects.get(ingredient=i, product=product).weight / 100
-		return round(result,2)
+			#Estimate nutrition value per 100 gram of ready product, not the whole product
+			result += i.protein #* ReceipeIngredient.objects.get(ingredient=i, product=product).weight / 100
+		return round(result/product.ingredient.count(),1)
 
 	@property   
 	def total_carbohydrates(self):
 		product = Product.objects.get(pk=self.pk)
 		result = 0
 		for i in product.ingredient.all():
-			result += i.carbohydrates * ReceipeIngredient.objects.get(ingredient=i, product=product).weight / 100
-		return round(result,2)
+			result += i.carbohydrates #* ReceipeIngredient.objects.get(ingredient=i, product=product).weight / 100
+		return round(result/product.ingredient.count(),1)
 
 	@property   
 	def total_fat(self):
 		product = Product.objects.get(pk=self.pk)
 		result = 0
 		for i in product.ingredient.all():
-			result += i.fat * ReceipeIngredient.objects.get(ingredient=i, product=product).weight / 100
-		return round(result,2)
+			result += i.fat #* ReceipeIngredient.objects.get(ingredient=i, product=product).weight / 100
+		return round(result/product.ingredient.count(),1)
 
 
 	@property 
@@ -107,12 +116,10 @@ class Product(models.Model):
 			result += i.price * ReceipeIngredient.objects.get(ingredient=i, product=product).weight / 100
 		return round(result,2)
 
-	@property
-	def total_weight(self):
-		product = Product.objects.get(pk=self.pk)
-		return sum([ReceipeIngredient.objects.get(ingredient=i, product=product).weight for i in product.ingredient.all()])
-	
 
+
+	class Meta:
+		ordering = ["name"]
 
 class ReceipeIngredient(models.Model):
 	ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)

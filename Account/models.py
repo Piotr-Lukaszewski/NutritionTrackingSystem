@@ -1,5 +1,8 @@
+import datetime as dt
+from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+
 
 from Food.models import Product
 
@@ -76,15 +79,60 @@ class Profile(AbstractBaseUser):
 		return True
 
 
+class Diet(models.Model):
+	"""
+
+	"""
+
+	#date 				= models.DateField(default=timezone.now())
+	profile 			= models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True) 	
+	product 			= models.ForeignKey(Product, on_delete=models.SET_NULL, null=True) 
+	weight 				= models.IntegerField(default=100) 
+	date                = models.DateField(default=dt.date.today())
+
+
+	def __str__(self):
+		return f"{self.date} : {self.profile} : {self.product} : {self.weight}"
+
+
+class User_Diet(models.Model):
+	"""
+
+	"""
+	profile 			= models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True)
+	product 			= models.ManyToManyField(Diet)
 
 
 
-# class DietPosition(models.Model):
-
-# 	profile_user = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True) 
-# 	date = models.TimeField(auto_now=True)
-# 	diet_prod = models.ManyToManyField(Product, related_name="diet_set")
-# 	prod_weight = models.IntegerField(default=100) 
 
 
+	def __str__(self):
+		return f"Profile: {self.profile.username}"
 
+	def protein_consumed(self, date=None):
+		if date == None:			
+			date = dt.date.today()
+		profile_diet = User_Diet.objects.get(pk=self.pk)
+		result = 0			
+		for prod in profile_diet.product.all():
+			if prod.date == date:
+				result += prod.product.total_protein * prod.weight / 100
+			# else:
+			# 	print(f"{date} || {prod.date} || {prod.product.name}")
+		return int(result)
+	
+	# @property
+	# def total_protein(self):
+	# 	product = Product.objects.get(pk=self.pk)
+	# 	result = 0
+	# 	for i in product.ingredient.all():
+	# 		result += i.protein * ReceipeIngredient.objects.get(ingredient=i, product=product).weight / 100
+	# 	return round(result,1)
+
+
+# import datetime as dt
+# from Account.models import *
+# profile = User_Diet.objects.get(profile=Profile.objects.get(username="admin"))
+# profile.protein_consumed()
+
+# profile.protein_consumed(dt.date.today() - dt.timedelta(days=1))

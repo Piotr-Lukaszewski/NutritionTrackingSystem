@@ -3,7 +3,7 @@
 <header>
 	<nav class="navbar navbar-dark .bg-dark navbar-expand-md" id="navbargroup">
 		<a class="navbar-brand" href="http://127.0.0.1:8000/">			
-			<img src="{% static 'images/logo.png' %}" width="30" height="30" alt="" class="d-inline-block mr-sm-1">	
+			<img src="#" width="30" height="30" alt="" class="d-inline-block mr-sm-1">	
 			<!-- m/p => margin/padding t,b,l,r top,bottom itp. x = l+r y = t+b  np. mx-5	 -->						
 			My web-site
 		</a>
@@ -51,7 +51,7 @@
 
 				{% if request.user.is_authenticated %}
 					<li class="nav-item px-md-5">
-						<a  class="nav-link" href="{% url 'profile:profile_details' %}">Profile</a>					
+						<a  class="nav-link" href="{% url 'profile:profile_details' %}">Diet Plan</a>					
 					</li>
 				{% endif %}
 			</ul>
@@ -59,7 +59,7 @@
 			<div class="navbar-nav">
 				{% if request.user.is_authenticated %}
 					<a class="nav-item nav-link" href="{% url 'profile:log_out' %}">Logout</a>
-					<a class="nav-item nav-link" href="{% url 'profile:profile_details' %}" >Hello, {{request.user.username}} </a>
+					<a class="nav-item nav-link" href="{% url 'profile:profile_details' %}" > Profile </a>
 				{% else %}
 					<a class="nav-item nav-link" href="{% url 'profile:log_in' %}">Login</a>
 					<a class="nav-item nav-link" href="{% url 'profile:registration' %}">Register</a>

@@ -38,7 +38,7 @@
 					<td>{{item.total_price}} $</td>
 					<td>									 
 						<button type="button" class="btn btn-secondary">
-							<a class="hyperlink-off" href="#">Add</a>
+							<a class="hyperlink-off" href="{% url 'profile:add_to_diet' item.pk %}">Add</a>
 						</button>													
 					</td>
 				</tr>

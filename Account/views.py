@@ -1,16 +1,17 @@
 #Library imports
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
+from django.utils import timezone
+import datetime
 #Internal imports
-from .models import Profile
-from django.contrib.auth import logout
-from django.shortcuts import redirect
-
+from .models import Profile, Diet, User_Diet
 from .forms import RegistrationForm, AuthenticationForm, ProfileUpdateForm
+from Food.models import Product
 
 """
 	TO DO LIST
@@ -24,6 +25,14 @@ class ProfilesListView(ListView, SuccessMessageMixin):
 	model = Profile
 	paginate_by = 10
 	context_object_name = "objects"
+
+
+
+def profile_view(request):
+	context = {}
+	username = request.user.username
+	context["profile"] = Profile.objects.get(username=username)
+	return render(request, "Account/profile_view.html", context)
 
 
 @login_required
@@ -49,13 +58,6 @@ def profile_update_view(request):
 	return render(request, "Account/profile_update_view.html", context)
 
 
-def profile_view(request):
-	context = {}
-	username = request.user.username
-	context["profile"] = Profile.objects.get(username=username)
-	return render(request, "Account/profile_view.html", context)
-
-
 def registration_view(request):
 	context = {}
 	if request.POST:
@@ -67,6 +69,8 @@ def registration_view(request):
 			new_account = authenticate(username=username, password=password)	
 
 			login(request, user=new_account)
+			new_user_diet = User_Diet(profile=request.user)
+			new_user_diet.save()
 			return redirect("profile:profile_details")
 		else:
 			context["registration_form"] = form
@@ -102,30 +106,58 @@ def logout_view(request):
 	return redirect("home_view")
 
 
+##################
+
+
+@login_required
+def add_prod_to_diet(request, pk):
+	profile = Profile.objects.get(username=request.user.username) 
+	product = Product.objects.get(pk=pk)
+	diet_product, status = Diet.objects.get_or_create(profile=profile, product=product, date=timezone.now())
+	if status:
+		diet_product.weight = product.total_weight
+	else:
+		diet_product.weight += product.total_weight	
+	User_Diet.objects.get(profile=profile).product.add(diet_product)   
+	diet_product.save()
+	return HttpResponse(status=204)
+
+
+
+# class DietView(ListView):
+
+# 	template_name = "Account/user_diet.html"
+#     model = Diet    
+#     context_object_name = "objects"
+
+#     def get_queryset(self):
+#     	query = self.request.GET.get("date")
+#     	if query == None:
+#     		query = timezone.now()
+#     	products_list = Diet.objects.filter(date=query, profile=self.request.user.username)
+#     	return products_list
 
 
 
 
 
 
+############################
+# class Diet(models.Model):
 
-# def profile_view(request):
-#     # user_form = UserUpdateForm
-#     profile_form = ProfileUpdateForm
-#     if request.POST:
-#         user_form = UserUpdateForm(request.POST, instance=request.user)
-#         profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)        
-#         if user_form.is_valid() and profile_form.is_valid():
-#             user_form.save()
-#             profile_form.save()
-#             messages.success(request, f"Your profile has been updated!")
-#             return redirect('profile')
-#     else:       
-#         user_form = UserUpdateForm(instance=request.user)
-#         profile_form = ProfileUpdateForm(instance=request.user.profile)
-		
-#     context = {
-#         'user_form':user_form,
-#         'profile_form':profile_form
-#     }
-#     return render(request, "Users/profile.html", context)
+# 	date = models.DateField(default=timezone.now())
+# 	profile = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True) 	
+# 	product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True) 
+# 	weight = models.IntegerField(default=100) 
+
+
+# class SearchResultsView(ListView, SuccessMessageMixin):
+# 	template_name = "Food/search_results.html"
+# 	model = Product
+# 	context_object_name = "products" 	
+# 	paginate_by = 10
+
+# 	def get_queryset(self):
+# 		query = self.request.GET.get("word")
+# 		product_list = Product.objects.filter(name__icontains=query)
+# 		return product_list

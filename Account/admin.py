@@ -1,5 +1,5 @@
 from django.contrib import admin
-from Account.models import Profile
+from Account.models import Profile, Diet, User_Diet
 from django.contrib.auth.admin import UserAdmin
 
 
@@ -13,4 +13,20 @@ class AccountAdmin(UserAdmin):
 	list_filter = ()
 	fieldsets = ()
 
+
+class ProductsAdmin(UserAdmin):
+	list_display = ("date", "profile", "product", "weight")
+	search_fields = ()
+	readonly_fields = ()
+
+	filter_horizontal = ()
+	list_filter = ()
+	fieldsets = ()
+	ordering = ("date",)
+
+
 admin.site.register(Profile, AccountAdmin)
+admin.site.register(Diet, ProductsAdmin)
+admin.site.register(User_Diet)
+
+
