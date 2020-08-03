@@ -8,7 +8,8 @@ from Account.views import (
 	login_view, 
 	logout_view, 
 	profile_view,
-	add_prod_to_diet
+	add_prod_to_diet,
+	DietView
 	)
 
 app_name = "profile"
@@ -20,7 +21,8 @@ urlpatterns = [
 	path("log_out/", logout_view, name="log_out"),
 	path("details/", profile_view, name="profile_details"),
 	path("update/", profile_update_view, name="profile_update"),
-	path("add_to_diet/<int:pk>", add_prod_to_diet, name="add_to_diet")
+	path("add_to_diet/<int:pk>", add_prod_to_diet, name="add_to_diet"),
+	path("user_diet/", DietView.as_view(), name="user_diet"),
 ]
 
 

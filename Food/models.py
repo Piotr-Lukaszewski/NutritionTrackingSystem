@@ -96,7 +96,7 @@ class Product(models.Model):
 		product = Product.objects.get(pk=self.pk)
 		result = 0
 		for i in product.ingredient.all():
-			result += i.carbohydrates #* ReceipeIngredient.objects.get(ingredient=i, product=product).weight / 100
+			result += i.carbohydrates 
 		return round(result/product.ingredient.count(),1)
 
 	@property   
@@ -104,7 +104,7 @@ class Product(models.Model):
 		product = Product.objects.get(pk=self.pk)
 		result = 0
 		for i in product.ingredient.all():
-			result += i.fat #* ReceipeIngredient.objects.get(ingredient=i, product=product).weight / 100
+			result += i.fat 
 		return round(result/product.ingredient.count(),1)
 
 
@@ -116,10 +116,9 @@ class Product(models.Model):
 			result += i.price * ReceipeIngredient.objects.get(ingredient=i, product=product).weight / 100
 		return round(result,2)
 
-
-
 	class Meta:
 		ordering = ["name"]
+
 
 class ReceipeIngredient(models.Model):
 	ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)

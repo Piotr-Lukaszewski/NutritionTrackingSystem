@@ -7,6 +7,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.utils import timezone
+from django.utils.decorators import method_decorator #https://docs.djangoproject.com/en/dev/topics/class-based-views/intro/#decorating-the-class
 import datetime
 #Internal imports
 from .models import Profile, Diet, User_Diet
@@ -15,10 +16,8 @@ from Food.models import Product
 
 """
 	TO DO LIST
-	*profile class for gathering nutrition data
-	*password recover- move alert to the middle of website
+	*password recover- move alert to the middle of form
 """
-
 
 class ProfilesListView(ListView, SuccessMessageMixin):
 	template_name = "Account/profile_list.html"
@@ -106,9 +105,6 @@ def logout_view(request):
 	return redirect("home_view")
 
 
-##################
-
-
 @login_required
 def add_prod_to_diet(request, pk):
 	profile = Profile.objects.get(username=request.user.username) 
@@ -124,40 +120,26 @@ def add_prod_to_diet(request, pk):
 
 
 
-# class DietView(ListView):
+@method_decorator(login_required, name='dispatch')
+class DietView(ListView):
+	"""		
+		Class responsible for calculating the current macrocomponent supply for a user 
+		for specific day.
 
-# 	template_name = "Account/user_diet.html"
-#     model = Diet    
-#     context_object_name = "objects"
+	"""	
+	model = Diet
+	template_name = "Account/user_diet.html"
+	context_object_name = "objects"
 
-#     def get_queryset(self):
-#     	query = self.request.GET.get("date")
-#     	if query == None:
-#     		query = timezone.now()
-#     	products_list = Diet.objects.filter(date=query, profile=self.request.user.username)
-#     	return products_list
+	def get_queryset(self):
+		context = {}
+		profile = Profile.objects.get(username=self.request.user.username)
+		context["profile"] = profile
+		context["diet_objects"] = Diet.objects.filter(profile=profile, date=timezone.now())#, date=datetime.date.today()
+		context["diet_plan"] = User_Diet.objects.filter(profile=profile)
+		return context
 
-
-
-
-
-
-############################
-# class Diet(models.Model):
-
-# 	date = models.DateField(default=timezone.now())
-# 	profile = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True) 	
-# 	product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True) 
-# 	weight = models.IntegerField(default=100) 
-
-
-# class SearchResultsView(ListView, SuccessMessageMixin):
-# 	template_name = "Food/search_results.html"
-# 	model = Product
-# 	context_object_name = "products" 	
-# 	paginate_by = 10
-
-# 	def get_queryset(self):
-# 		query = self.request.GET.get("word")
-# 		product_list = Product.objects.filter(name__icontains=query)
-# 		return product_list
+########################
+class ArchieveDiet(ListView, SuccessMessageMixin):
+	pass
+########################

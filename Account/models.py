@@ -82,8 +82,8 @@ class Profile(AbstractBaseUser):
 class Diet(models.Model):
 	"""
 
-	"""
 
+	"""
 	#date 				= models.DateField(default=timezone.now())
 	profile 			= models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True) 	
 	product 			= models.ForeignKey(Product, on_delete=models.SET_NULL, null=True) 
@@ -94,21 +94,36 @@ class Diet(models.Model):
 	def __str__(self):
 		return f"{self.date} : {self.profile} : {self.product} : {self.weight}"
 
+	@property
+	def position_protein(self):
+		return self.product.total_protein * self.weight / 100
+
+	@property
+	def position_carbohydrates(self):
+		return self.product.total_carbohydrates * self.weight / 100
+
+	@property
+	def position_fat(self):
+		return int(self.product.total_fat * self.weight / 100)
+
+	@property
+	def position_price(self):
+		return self.product.total_price * self.weight / self.product.total_weight
+
 
 class User_Diet(models.Model):
 	"""
-
+		
+		_consumed function returns the total number of macronutrients eatten on a given day
+		from all products for a current user.
 	"""
 	profile 			= models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True)
 	product 			= models.ManyToManyField(Diet)
 
-
-
-
-
 	def __str__(self):
 		return f"Profile: {self.profile.username}"
 
+	@property
 	def protein_consumed(self, date=None):
 		if date == None:			
 			date = dt.date.today()
@@ -119,20 +134,54 @@ class User_Diet(models.Model):
 				result += prod.product.total_protein * prod.weight / 100
 			# else:
 			# 	print(f"{date} || {prod.date} || {prod.product.name}")
+		return result
+
+	@property
+	def fat_consumed(self, date=None):
+		if date == None:			
+			date = dt.date.today()
+		profile_diet = User_Diet.objects.get(pk=self.pk)
+		result = 0			
+		for prod in profile_diet.product.all():
+			if prod.date == date:
+				result += prod.product.total_fat * prod.weight / 100
+		return result
+
+	@property
+	def carbohydrates_consumed(self, date=None):
+		if date == None:			
+			date = dt.date.today()
+		profile_diet = User_Diet.objects.get(pk=self.pk)
+		result = 0			
+		for prod in profile_diet.product.all():
+			if prod.date == date:
+				result += prod.product.total_carbohydrates * prod.weight / 100
 		return int(result)
+
+	def weight_consumed(self, date=None):
+		if date == None:			
+			date = dt.date.today()
+		profile_diet = User_Diet.objects.get(pk=self.pk)
+		result = 0			
+		for prod in profile_diet.product.all():
+			if prod.date == date:
+				result +=  prod.weight 
+		return result
+
+	def money_spent(self, date=None):
+		if date == None:			
+			date = dt.date.today()
+		profile_diet = User_Diet.objects.get(pk=self.pk)
+		result = 0			
+		for prod in profile_diet.product.all():
+			if prod.date == date:
+				result +=  prod.position_price #/ prod.weight * 100
+		return result
+
+	def calories_consumed(self, date=None):
+		result = self.protein_consumed * 4 +\
+				 self.carbohydrates_consumed * 4 +\
+				 self.fat_consumed * 8
+		return result
 	
-	# @property
-	# def total_protein(self):
-	# 	product = Product.objects.get(pk=self.pk)
-	# 	result = 0
-	# 	for i in product.ingredient.all():
-	# 		result += i.protein * ReceipeIngredient.objects.get(ingredient=i, product=product).weight / 100
-	# 	return round(result,1)
 
-
-# import datetime as dt
-# from Account.models import *
-# profile = User_Diet.objects.get(profile=Profile.objects.get(username="admin"))
-# profile.protein_consumed()
-
-# profile.protein_consumed(dt.date.today() - dt.timedelta(days=1))
