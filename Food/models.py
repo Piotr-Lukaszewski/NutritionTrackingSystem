@@ -49,8 +49,7 @@ class Ingredient(models.Model):
 
 	# @property
 	# def slug(self):
-	# 	return "".join(["-" if x == " " else x for x in self.name])
-	
+	# 	return "".join(["-" if x == " " else x for x in self.name])	
 
 	class Meta:
 		ordering = ["id"]
@@ -92,28 +91,28 @@ class Product(models.Model):
 
 	@property
 	def total_protein(self):
+		#Estimate nutrition value per 100 gram of ready product, not the whole product
 		product = Product.objects.get(pk=self.pk)
-		result = 0
+		result = 0		
 		for i in product.ingredient.all():
-			#Estimate nutrition value per 100 gram of ready product, not the whole product
-			result += i.protein #* ReceipeIngredient.objects.get(ingredient=i, product=product).weight / 100
-		return round(result/product.ingredient.count(),1)
+			result += i.protein * ReceipeIngredient.objects.get(ingredient=i, product=product).weight		
+		return round(result/self.total_weight,1)#product.ingredient.count()
 
 	@property   
 	def total_carbohydrates(self):
 		product = Product.objects.get(pk=self.pk)
 		result = 0
 		for i in product.ingredient.all():
-			result += i.carbohydrates 
-		return round(result/product.ingredient.count(),1)
+			result += i.carbohydrates * ReceipeIngredient.objects.get(ingredient=i, product=product).weight
+		return round(result/self.total_weight,1)
 
 	@property   
 	def total_fat(self):
 		product = Product.objects.get(pk=self.pk)
 		result = 0
 		for i in product.ingredient.all():
-			result += i.fat 
-		return round(result/product.ingredient.count(),1)
+			result += i.fat * ReceipeIngredient.objects.get(ingredient=i, product=product).weight
+		return round(result/self.total_weight,1)
 
 
 	@property 

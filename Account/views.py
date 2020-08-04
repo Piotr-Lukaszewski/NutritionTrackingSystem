@@ -131,9 +131,12 @@ class DietView(ListView):
 	template_name = "Account/user_diet.html"
 	context_object_name = "objects"
 
-	def get_queryset(self):
+	def get_queryset(self, pk=None):
 		context = {}
-		profile = Profile.objects.get(username=self.request.user.username)
+		if pk == None:
+			profile = Profile.objects.get(username=self.request.user.username)
+		else:
+			profile = Profile.objects.get(pk=pk)
 		context["profile"] = profile
 		context["diet_objects"] = Diet.objects.filter(profile=profile, date=timezone.now())#, date=datetime.date.today()
 		context["diet_plan"] = User_Diet.objects.filter(profile=profile)

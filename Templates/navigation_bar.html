@@ -51,7 +51,15 @@
 
 				{% if request.user.is_authenticated %}
 					<li class="nav-item px-md-5">
-						<a  class="nav-link" href="{% url 'profile:user_diet' %}">Diet Plan</a>					
+						<a  class="nav-link" href="{% url 'profile:user_diet' request.user.username  %}">Diet plan</a>					
+					</li>
+				{% endif %}
+
+				{% if request.user.is_staff %}
+					<li>
+						<a class="nav-link" href="{% url 'profile:prof_table' %}">
+							Users list
+						</a>
 					</li>
 				{% endif %}
 			</ul>

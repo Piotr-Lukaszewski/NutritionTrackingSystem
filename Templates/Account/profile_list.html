@@ -16,7 +16,11 @@
 		<tbody>	
 			{% for profile in objects %}
 				<tr>					
-					<td>{{profile.username}}</td>
+					<td>
+						<a class="hyperlink-off" href="{% url 'profile:user_diet' profile.username %}">
+							{{profile.username}}
+						</a>
+					</td>
 					<td>{{profile.calories_plan}}</td>
 					<td>{{profile.get_diet_type_display}}</td>
 					<td>{{profile.date_joined}}</td>
