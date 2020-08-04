@@ -68,30 +68,35 @@ def create_product(request):
 			if status == True:
 				new_prod.save()
 			else:
-				return redirect("food:prod_detail", pk=new_prod.pk)
-			return redirect("food:ingredient_table", pk=new_prod.pk)
+				return redirect("food:prod_detail", slug=new_prod.slug)
+			return redirect("food:ingredient_table", slug=new_prod.slug)
+			# 	return redirect("food:prod_detail", pk=new_prod.pk)
+			# return redirect("food:ingredient_table", pk=new_prod.pk)
 	else:
 		form = ProductCreationForm()
 		context["form"] = form
 	return render(request, "Food/create_meal.html", context)
 
-def add_ingredient(request, pk):
+# def add_ingredient(request, pk):
+def add_ingredient(request, slug):
 	"""		
 		Display a list of all available ingredients, with the possibility to add to a recipe for a previously created recipe.
 	"""	
 	context = {}
-	product = Product.objects.get(pk=pk)
-	context["prod_pk"] = pk	
+	product = Product.objects.get(slug=slug)
+	context["prod_slug"] = slug
+	context["prod_pk"] = product.pk	
 	context["ingredients"] = Ingredient.objects.all()
 	context["recipe"] = ReceipeIngredient.objects.filter(product=product)
 	return render(request, "Food/ingredient_table.html", context)
 
-def create_recipe(request, prod_pk, ing_pk):
+# def create_recipe(request, prod_pk, ing_pk):
+def create_recipe(request, prod_slug, ing_slug):
 	"""		
 		Adds ingredients to a recipe combined with a previously created product.
 	"""
-	product = Product.objects.get(pk=prod_pk)
-	ingredient = Ingredient.objects.get(pk=ing_pk)
+	product = Product.objects.get(slug=prod_slug)
+	ingredient = Ingredient.objects.get(slug=ing_slug)
 
 	if ReceipeIngredient.objects.filter(product = product, ingredient = ingredient).count() > 0:
 		new_recipe_position = ReceipeIngredient.objects.get(product = product, ingredient = ingredient)

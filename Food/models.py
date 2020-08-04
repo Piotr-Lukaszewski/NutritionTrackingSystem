@@ -35,6 +35,7 @@ class Ingredient(models.Model):
 	quantity_per_portion = models.IntegerField(blank=True)
 	price = models.DecimalField(max_digits=100, decimal_places=2, blank=True)
 	food_type = models.CharField(max_length=2, choices=FOOD_TYPE_CHOICES, blank=True)
+	slug = models.SlugField(max_length=100, unique=True, blank=True)
 
 
 	def __str__(self):
@@ -46,9 +47,9 @@ class Ingredient(models.Model):
 			self.slug = slugify(self.name)
 		super(Ingredient, self).save(*args, **kwargs)
 
-	@property
-	def slug(self):
-		return "".join(["-" if x == " " else x for x in self.name])
+	# @property
+	# def slug(self):
+	# 	return "".join(["-" if x == " " else x for x in self.name])
 	
 
 	class Meta:
@@ -65,10 +66,17 @@ class Product(models.Model):
 	ingredient = models.ManyToManyField(Ingredient, through="ReceipeIngredient")
 	ingredinet_based = models.BooleanField(default=False)
 	recipe = models.CharField(max_length=500, blank=True)
+	slug = models.SlugField(max_length=100, unique=True, blank=True)
 
 
 	def __str__(self):
 		return f"{self.name}"
+
+	def save(self, *args, **kwargs):
+		self.name = self.name.lower()
+		if not self.slug:
+			self.slug = slugify(self.name)
+		super(Product, self).save(*args, **kwargs)
 
 	@property
 	def food_type(self):

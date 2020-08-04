@@ -27,7 +27,7 @@
 			{% for item in products %}
 				<tr>
 					<td>
-						<a class="hyperlink-off" href="{% url 'food:prod_detail' item.pk %}">
+						<a class="hyperlink-off" href="{% url 'food:prod_detail' item.slug %}">
 							{{ item.name|capfirst }}
 						</a>	
 					</td>						

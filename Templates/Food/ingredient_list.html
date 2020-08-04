@@ -27,7 +27,7 @@
 			{% for item in ingredients %}
 				<tr>
 					<td>
-						<a class="hyperlink-off" href="{% url 'food:ingredinet_detail' item.pk %}">
+						<a class="hyperlink-off" href="{% url 'food:ingredinet_detail' item.slug %}">
 							{{ item.name|capfirst }}
 						</a>
 					</td>						

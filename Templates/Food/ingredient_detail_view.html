@@ -25,13 +25,13 @@
 
 
         <button class="btn btn-info ml-3 mr-3" type="submit">
-            <a class="Update-button" href="{% url 'food:ingredient_update' object.pk %}">
+            <a class="Update-button" href="{% url 'food:ingredient_update' object.slug %}">
                 Edit
             </a>
         </button>
    
         <button class="btn btn-danger" type="submit">
-            <a class="Update-button" href="{% url 'food:ingredient_delete' object.pk %}">
+            <a class="Update-button" href="{% url 'food:ingredient_delete' object.slug %}">
                 Delete
             </a>
         </button>

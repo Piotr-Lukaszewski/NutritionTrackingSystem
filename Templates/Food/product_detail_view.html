@@ -24,18 +24,18 @@
 
         {% if object.ingredinet_based == False %}
         	<button class="btn btn-secondary" type="submit">
-        		<a class="Update-button" href="{% url 'food:ingredient_table' object.pk %}">Update recipe</a>
+        		<a class="Update-button" href="{% url 'food:ingredient_table' object.slug %}">Update recipe</a>
         	</button>
         {% endif %}
 
         <button class="btn btn-info ml-3 mr-3" type="submit">
-            <a class="Update-button" href="{% url 'food:update_prod' object.pk %}">
+            <a class="Update-button" href="{% url 'food:update_prod' object.slug %}">
                 Edit
             </a>
         </button>
    
         <button class="btn btn-danger" type="submit">
-            <a class="Update-button" href="{% url 'food:delete_prod' object.pk %}">Delete</a>
+            <a class="Update-button" href="{% url 'food:delete_prod' object.slug %}">Delete</a>
         </button>
 
     {% endif %}
