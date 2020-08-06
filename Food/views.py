@@ -68,6 +68,7 @@ def create_product(request):
 			if status == True:
 				new_prod.save()
 			else:
+				print("Skladnik o takiej nazwie istnieje")
 				return redirect("food:prod_detail", slug=new_prod.slug)
 			return redirect("food:ingredient_table", slug=new_prod.slug)
 			# 	return redirect("food:prod_detail", pk=new_prod.pk)

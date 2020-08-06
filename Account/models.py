@@ -136,6 +136,10 @@ class User_Diet(models.Model):
 	def __str__(self):
 		return f"Profile: {self.profile.username}"
 
+
+	def get_absolute_url(self):
+		return reverse("profile:user_diet", kwargs={"username": self.profile.username})
+
 	@property
 	def protein_consumed(self, date=None):
 		if date == None:			

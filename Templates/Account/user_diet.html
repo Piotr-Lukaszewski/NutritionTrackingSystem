@@ -18,12 +18,14 @@
 		<tbody>
 			{% for element in objects.diet_objects %}
 					<tr>
-						<td>
-							<button type="button" class="btn btn-secondary">
-								<a class="hyperlink-off" href="#">
-									Remove
-								</a>
+						<td>	
+							{% if objects.profile.username == request.user.username %}						
+								<button type="button" class="btn btn-secondary">
+									<a class="hyperlink-off" href="{% url 'profile:remove_position' element.pk%}">
+										Remove
+									</a>
 							</button>
+							{% endif %}
 						</td>	
 						<td>{{ element.product|lower|capfirst }}</td>
 						<td>{{ element.position_protein|floatformat:1 }}</td>
@@ -32,11 +34,13 @@
 						<td>{{ element.position_price|floatformat:2 }} $</td>				
 						<td>{{ element.weight|floatformat:0 }}</td>
 						<td>
-							<button type="button" class="btn btn-secondary">
-								<a class="hyperlink-off" href="#">
-									Change quantity
-								</a>
-							</button>
+							{% if objects.profile.username == request.user.username %}	
+								<button type="button" class="btn btn-secondary">
+									<a class="hyperlink-off" href="{% url 'profile:update_position_weight' element.pk%}">
+										Change quantity
+									</a>
+								</button>
+							{% endif %}
 						</td>
 					</tr>	
 								

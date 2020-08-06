@@ -1,6 +1,6 @@
 #Library imports
 from django.shortcuts import render, redirect
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, DeleteView, UpdateView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.contrib.auth import login, authenticate, logout
@@ -125,13 +125,12 @@ class DietView(ListView):
 	"""		
 		Class responsible for calculating the current macrocomponent supply for a user 
 		for specific day.
-
 	"""	
 	model = Diet
 	template_name = "Account/user_diet.html"
 	context_object_name = "objects"
 
-	def get_queryset(self):#pk=None		
+	def get_queryset(self):	
 		context = {}
 		username = self.kwargs.get("username")
 		profile = Profile.objects.get(username=username)
@@ -139,6 +138,28 @@ class DietView(ListView):
 		context["diet_objects"] = Diet.objects.filter(profile=profile, date=timezone.now())#, date=datetime.date.today()
 		context["diet_plan"] = User_Diet.objects.filter(profile=profile)
 		return context
+
+@method_decorator(login_required, name='dispatch')
+class DeleteDietProdView(DeleteView):
+	model = Diet
+	template_name = "Account/remove_prod_from_diet.html"
+	context_object_name = "objects"
+
+	def get_success_url(self):
+		username = self.request.user.username
+		return reverse_lazy("profile:user_diet",args=[username])
+
+
+@method_decorator(login_required, name='dispatch')
+class UpdateDietProdView(UpdateView):
+	model = Diet
+	template_name = "Account/update_prod_from_diet.html"
+	context_object_name = "objects"
+	fields = ["weight"]
+
+	def get_success_url(self):
+		username = self.request.user.username
+		return reverse_lazy("profile:user_diet",args=[username])
 
 ########################
 class ArchieveDiet(ListView, SuccessMessageMixin):

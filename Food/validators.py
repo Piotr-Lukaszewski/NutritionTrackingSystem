@@ -8,6 +8,4 @@ def macro_quantity_validator(value):
 			params={"value": value},
 		)
 
-
-
 		

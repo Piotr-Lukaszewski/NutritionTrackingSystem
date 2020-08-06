@@ -9,7 +9,9 @@ from Account.views import (
 	logout_view, 
 	profile_view,
 	add_prod_to_diet,
-	DietView
+	DietView,
+	DeleteDietProdView,
+	UpdateDietProdView,
 	)
 
 app_name = "profile"
@@ -25,6 +27,8 @@ urlpatterns = [
 	#path("user_diet/", DietView.as_view(), name="user_diet"),
 	# path("user_diet/<int:pk>/", DietView.as_view(), name="user_diet"),
 	path("user_diet/<str:username>/", DietView.as_view(), name="user_diet"),
+	path("user_diet/remove/<int:pk>/", DeleteDietProdView.as_view(), name="remove_position"),
+	path("user_diet/update/<int:pk>/", UpdateDietProdView.as_view(), name="update_position_weight"),
 
 ]
 

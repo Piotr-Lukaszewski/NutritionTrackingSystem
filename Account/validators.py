@@ -15,8 +15,13 @@ def calories_validator(value):
 			)
 
 def meal_weight_valdiator(value):
-	if meal_weight_valdiator < 0:
+	if value < 0:
 		raise ValidationError(
 			(f"You cannot choose serving size smaller than 0."),
 			params={"value": value},
 		)
+	elif value > 2000:
+		raise ValidationError(
+			(f"You cannot choose serving size bigger than 2.000."),
+			params={"value": value},
+		)		
