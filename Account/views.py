@@ -111,10 +111,10 @@ def add_prod_to_diet(request, pk):
 	product = Product.objects.get(pk=pk)
 	diet_product, status = Diet.objects.get_or_create(profile=profile, product=product, date=timezone.now())
 	if status:
-		diet_product.weight = product.total_weight
+		diet_product.weight = product.total_weight		  
 	else:
 		diet_product.weight += product.total_weight	
-	User_Diet.objects.get(profile=profile).product.add(diet_product)   
+	User_Diet.objects.get(profile=profile).product.add(diet_product)		 
 	diet_product.save()
 	return HttpResponse(status=204)
 

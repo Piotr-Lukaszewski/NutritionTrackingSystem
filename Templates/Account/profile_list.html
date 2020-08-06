@@ -18,7 +18,7 @@
 				<tr>					
 					<td>
 						<a class="hyperlink-off" href="{% url 'profile:user_diet' profile.username %}">
-							{{profile.username}}
+							{{profile.username|capfirst}}
 						</a>
 					</td>
 					<td>{{profile.calories_plan}}</td>

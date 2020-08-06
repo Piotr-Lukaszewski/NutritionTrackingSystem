@@ -32,6 +32,9 @@ class MyAccountManager(BaseUserManager):
 
 		user.set_password(password)
 		user.save(using=self._db)
+
+		new_user_diet = User_Diet(profile=user)
+		new_user_diet.save()
 		return user
 
 	def create_superuser(self, email, username, password):
@@ -44,6 +47,8 @@ class MyAccountManager(BaseUserManager):
 		user.is_staff = True
 		user.is_superuser = True
 		user.save(using=self._db)
+		new_user_diet = User_Diet(profile=user)
+		new_user_diet.save()
 		return user
 
 
