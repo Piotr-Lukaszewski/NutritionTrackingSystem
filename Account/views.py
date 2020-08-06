@@ -9,6 +9,7 @@ from django.http import HttpResponse
 from django.utils import timezone
 from django.utils.decorators import method_decorator #https://docs.djangoproject.com/en/dev/topics/class-based-views/intro/#decorating-the-class
 import datetime
+
 #Internal imports
 from .models import Profile, Diet, User_Diet
 from .forms import RegistrationForm, AuthenticationForm, ProfileUpdateForm
@@ -62,11 +63,10 @@ def registration_view(request):
 	if request.POST:
 		form = RegistrationForm(request.POST)
 		if form.is_valid():
-			form.save()
+			form.save()	
 			username = form.cleaned_data["username"]
 			password = form.cleaned_data["password1"]
 			new_account = authenticate(username=username, password=password)	
-
 			login(request, user=new_account)
 			new_user_diet = User_Diet(profile=request.user)
 			new_user_diet.save()

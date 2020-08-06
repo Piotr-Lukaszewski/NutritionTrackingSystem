@@ -6,7 +6,7 @@
 	<div class="content-section">   
 		<form method="post" action="{% url 'profile:registration' %}">
 		    {% csrf_token %}
-
+		    {{ message }}
 			<fieldset class="form-group">
 				<legend class=border-bottom mb-4>Join today	
 					{{ registration_form|crispy }}

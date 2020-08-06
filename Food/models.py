@@ -3,6 +3,7 @@ from django.conf import settings
 from django.db.models import Sum
 from django.template.defaultfilters import slugify
 
+from .validators import macro_quantity_validator
 
 
 FOOD_TYPE_CHOICES = (
@@ -21,6 +22,13 @@ FOOD_CATEGORIES_CHOICES = (
 	("3", "Carbohydrates")
 )
 
+def zero_division_handling(func):
+	def wrapper_function(*agrs, **kwargs):
+		try:
+			return func(*agrs, **kwargs)
+		except ZeroDivisionError:
+			return 0
+	return wrapper_function
 
 
 class Ingredient(models.Model):
@@ -29,9 +37,9 @@ class Ingredient(models.Model):
 		all nutrition information.
 	"""
 	name = models.CharField(max_length=50, unique=True)
-	protein = models.FloatField()
-	carbohydrates = models.FloatField()
-	fat = models.FloatField()
+	protein = models.FloatField(validators=[macro_quantity_validator,])
+	carbohydrates = models.FloatField(validators=[macro_quantity_validator,])
+	fat = models.FloatField(validators=[macro_quantity_validator,])
 	quantity_per_portion = models.IntegerField(blank=True)
 	price = models.DecimalField(max_digits=100, decimal_places=2, blank=True)
 	food_type = models.CharField(max_length=2, choices=FOOD_TYPE_CHOICES, blank=True)
@@ -90,23 +98,26 @@ class Product(models.Model):
 		return int(result)
 
 	@property
+	@zero_division_handling
 	def total_protein(self):
 		#Estimate nutrition value per 100 gram of ready product, not the whole product
 		product = Product.objects.get(pk=self.pk)
 		result = 0		
 		for i in product.ingredient.all():
-			result += i.protein * ReceipeIngredient.objects.get(ingredient=i, product=product).weight		
+				result += i.protein * ReceipeIngredient.objects.get(ingredient=i, product=product).weight		
 		return round(result/self.total_weight,1)#product.ingredient.count()
 
 	@property   
-	def total_carbohydrates(self):
+	@zero_division_handling
+	def total_carbohydrates(self):	
 		product = Product.objects.get(pk=self.pk)
 		result = 0
 		for i in product.ingredient.all():
-			result += i.carbohydrates * ReceipeIngredient.objects.get(ingredient=i, product=product).weight
+				result += i.carbohydrates * ReceipeIngredient.objects.get(ingredient=i, product=product).weight
 		return round(result/self.total_weight,1)
 
 	@property   
+	@zero_division_handling
 	def total_fat(self):
 		product = Product.objects.get(pk=self.pk)
 		result = 0
@@ -116,6 +127,7 @@ class Product(models.Model):
 
 
 	@property 
+	@zero_division_handling
 	def total_price(self):
 		product = Product.objects.get(pk=self.pk)
 		result = 0

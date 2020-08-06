@@ -3,31 +3,31 @@
 
 {% block content %}
 
-	<h1 id="title">Calories tables </h1>
-
-	<p>Welcome to my first web-app written in Django.</p>
-
-	<p>		
-		This aplication is intended to calculate your daily calories consumption. 
-	</p>
-
-	<p> 
-		Also you will be able to compose your diet plan with the help of application. 	
-	</p>
-
-	<p>
-		Let's start maybe with short introduction what you will find in each tab of navigation bar on top.
-	</p>
-
-
 	<div class="col-md-6 container-fluid">
+			<h1 id="title">Calories tables </h1>
+
+			<div class="home">
+				<h3> Welcome! </h3>
+			</div>
+
+			<p>		
+				This aplication is intended to calculate your daily calories consumption. 
+			</p>
+
+			<p> 
+				Also you will be able to compose your diet plan with the help of application. 	
+			</p>
 
 			<p>
-				Food tab is the heart of the application inside you can find such sub-tabs as product-tables
-				where you can check nutrition values and add product, ingredient to your diet plan. 
-			</p> 
+				Let's start maybe with short introduction what you will find in each tab of navigation bar on top.
+			</p>
 
-			<!-- <img src="{% static 'images/Food_table.jpg' %}"> -->
+
+			<p>
+				Food tab is the heart of the application inside you can find such sub-tabs as product-tables.
+				Where you can check nutrition values and create your own products based on ingredient db, 
+				which later can be added to your diet plan. 
+			</p> 
 
 			<p>
 				As you can see on above picture you can add new products to the table. But remember to not duplicate existing positions!
@@ -40,7 +40,7 @@
 			<p>				
 				Another tab witch which you can  expand your knowledge about diet is articles tab.
 			</p>
-		<!-- 	<img src="{% static 'images/Article_tab.jpg' %}"> -->
+
 			<p>				
 				Reading articles  on topics that interest you, is not only thing you can do with them. You can also add new articles, just don't forget aboutto tag the product tags they concerns!
 			</p>
@@ -48,13 +48,13 @@
 			<p>
 				Finally Profile tab.
 			</p>
-<!-- 			<img src="{% static 'images/Profile_tab.jpg' %}"> -->
+
 			<p> 
 				Place where you can check all prods that you have chosen as ingredients of your diet. You can update quantity added to your diet 
 				remember after clicking add button in products table, product is added with suggested weight. 
 			</p>
 
 	</div>
-<br><br><br><br><br>
+	<br><br><br><br><br>
 
 {% endblock %}

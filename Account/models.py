@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
-
+from .validators import calories_validator, meal_weight_valdiator
 from Food.models import Product
 
 DIET_TYPE_CHOICES = [
@@ -54,7 +54,7 @@ class Profile(AbstractBaseUser):
 	"""
 	email 					= models.EmailField(verbose_name="email", max_length=60, unique=True)
 	username 				= models.CharField(verbose_name="username", max_length=30, unique=True)
-	calories_plan			= models.IntegerField(default=2500)
+	calories_plan			= models.IntegerField(default=2500, )
 	diet_type               = models.CharField(max_length=2, default="5", choices=DIET_TYPE_CHOICES)
 	is_admin				= models.BooleanField(default=False)
 	is_active				= models.BooleanField(default=True)
@@ -78,6 +78,14 @@ class Profile(AbstractBaseUser):
 	def has_module_perms(self, app_label):
 		return True
 
+	def save(self, *args, **kwargs):
+		self.username = self.username.lower()
+		self.email = self.email.lower()
+		super(Profile, self).save(*args, **kwargs)
+
+	class Meta:
+		ordering = ["id"]
+
 
 class Diet(models.Model):
 	"""
@@ -87,7 +95,7 @@ class Diet(models.Model):
 	#date 				= models.DateField(default=timezone.now())
 	profile 			= models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True) 	
 	product 			= models.ForeignKey(Product, on_delete=models.SET_NULL, null=True) 
-	weight 				= models.IntegerField(default=100) 
+	weight 				= models.IntegerField(default=100, validators=[meal_weight_valdiator,]) 
 	date                = models.DateField(default=dt.date.today())
 
 

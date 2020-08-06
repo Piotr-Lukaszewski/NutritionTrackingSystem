@@ -26,7 +26,6 @@ class TestViews(TestCase):
 		self.prod_detail_url		= reverse("food:prod_detail", args=["test_2"])
 		self.test_2 				= Product.objects.create(
 										name="test_2",
-										# ingredient=self.test,
 										ingredinet_based=True,
 										slug="test_2"
 									)
@@ -41,19 +40,16 @@ class TestViews(TestCase):
 	def test_prod_table_GET(self):		
 		#checks if response comes correctly
 		response = self.client.get(self.table_url)
-		#print(response)
 		self.assertEquals(response.status_code, 200)
 		self.assertTemplateUsed(response, "Food/product_list.html")
 
 	def test_ingredient_detail_Get(self):
 		response = self.client.get(self.ingredient_detail_url)
-		# print(response)
 		self.assertEquals(response.status_code, 200)
 		self.assertTemplateUsed(response, "Food/ingredient_detail_view.html")
 
 	def test_product_detail_Get(self):
 		response = self.client.get(self.prod_detail_url)
-		# print(response)
 		self.assertEquals(response.status_code, 200)
 		self.assertTemplateUsed(response, "Food/product_detail_view.html")
 
