@@ -24,12 +24,9 @@ urlpatterns = [
 	path("details/", profile_view, name="profile_details"),
 	path("update/", profile_update_view, name="profile_update"),
 	path("add_to_diet/<int:pk>", add_prod_to_diet, name="add_to_diet"),
-	#path("user_diet/", DietView.as_view(), name="user_diet"),
-	# path("user_diet/<int:pk>/", DietView.as_view(), name="user_diet"),
 	path("user_diet/<str:username>/", DietView.as_view(), name="user_diet"),
 	path("user_diet/remove/<int:pk>/", DeleteDietProdView.as_view(), name="remove_position"),
 	path("user_diet/update/<int:pk>/", UpdateDietProdView.as_view(), name="update_position_weight"),
-
 ]
 
 

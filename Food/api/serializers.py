@@ -10,9 +10,7 @@ class IngredientSerializer(serializers.ModelSerializer):
 	carbohydrates = serializers.FloatField()
 	fat = serializers.FloatField()
 	quantity_per_portion = serializers.IntegerField()
-	price = serializers.DecimalField(max_digits=100, decimal_places=2)
-
-	
+	price = serializers.DecimalField(max_digits=100, decimal_places=2)	
 
 
 	class Meta:

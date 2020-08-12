@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'crispy_forms',    
     'rest_framework',
     'django_filters',
+    'rest_framework_swagger',
     #My apps
     'Food',
     'Account',
@@ -49,7 +50,9 @@ INSTALLED_APPS = [
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
+    'DEFAULT_SCHEMA_CLASS':'rest_framework.schemas.coreapi.AutoSchema',
 }
+
 
 AUTH_USER_MODEL = 'Account.Profile'
 

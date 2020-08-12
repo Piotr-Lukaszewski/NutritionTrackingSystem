@@ -16,7 +16,8 @@ DIET_TYPE_CHOICES = [
 
 class MyAccountManager(BaseUserManager):
 	"""
-
+		Account  manager class determines the access for individual users.
+		Automaticly creates a diet plan for profiles created through the admins's console.
 	
 	"""
 	def create_user(self, email, username, password=None):
@@ -94,10 +95,10 @@ class Profile(AbstractBaseUser):
 
 class Diet(models.Model):
 	"""
-
+		Class connecting user with products selected by him and their weight.
+		Taking into account dates of product selection to keep on track diet habbits.
 
 	"""
-	#date 				= models.DateField(default=timezone.now())
 	profile 			= models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True) 	
 	product 			= models.ForeignKey(Product, on_delete=models.SET_NULL, null=True) 
 	weight 				= models.IntegerField(default=100, validators=[meal_weight_valdiator,]) 
@@ -126,7 +127,7 @@ class Diet(models.Model):
 
 class User_Diet(models.Model):
 	"""
-		
+		Class responsible for counting daily macroingredients and callories consumption for every user.
 		_consumed function returns the total number of macronutrients eatten on a given day
 		from all products for a current user.
 	"""
@@ -149,8 +150,6 @@ class User_Diet(models.Model):
 		for prod in profile_diet.product.all():
 			if prod.date == date:
 				result += prod.product.total_protein * prod.weight / 100
-			# else:
-			# 	print(f"{date} || {prod.date} || {prod.product.name}")
 		return result
 
 	@property
@@ -192,7 +191,7 @@ class User_Diet(models.Model):
 		result = 0			
 		for prod in profile_diet.product.all():
 			if prod.date == date:
-				result +=  prod.position_price #/ prod.weight * 100
+				result +=  prod.position_price
 		return result
 
 	def calories_consumed(self, date=None):
