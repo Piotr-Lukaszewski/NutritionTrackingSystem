@@ -26,16 +26,16 @@
 		<tbody>	
 			{% for item in products %}
 				<tr>
-					<td>
+					<td id="product_name">
 						<a class="hyperlink-off" href="{% url 'food:prod_detail' item.slug %}">
 							{{ item.name|capfirst }}
 						</a>	
 					</td>						
-					<td>{{item.total_protein}}</td>
-					<td>{{item.total_carbohydrates}}</td>
-					<td>{{item.total_fat}}</td>
-					<td>{{item.total_weight}}</td>
-					<td>{{item.total_price}} $</td>
+					<td id="protein">{{item.total_protein}}</td>
+					<td id="carbohydrate">{{item.total_carbohydrates}}</td>
+					<td id="fat">{{item.total_fat}}</td>
+					<td id="weight">{{item.total_weight}}</td>
+					<td id="price">{{item.total_price}} $</td>
 					<td>									 
 						<button type="button" class="btn btn-secondary">
 							<a class="hyperlink-off" href="#">Add</a>

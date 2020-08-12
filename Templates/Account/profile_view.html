@@ -12,8 +12,6 @@
 					<p> {{ profile.get_diet_type_display }}	</p>
 					<p> {{ profile.email }} </p>
 			</fieldset>
-			{{ profile.username }}
-			{{ request.user.username }}
 			{% if profile.username == request.user.username %}
 				<div class="form-group">				
 					<a type="button" class="btn btn-light" href="{% url 'profile:profile_update' %}" >Update</a>

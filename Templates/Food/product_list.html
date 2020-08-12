@@ -31,11 +31,11 @@
 							{{ item.name|capfirst }}
 						</a>	
 					</td>						
-					<td>{{item.total_protein}}</td>
-					<td>{{item.total_carbohydrates}}</td>
-					<td>{{item.total_fat}}</td>
-					<td>{{item.total_weight}}</td>
-					<td>{{item.total_price}} $</td>
+					<td id="proteins">{{item.total_protein}}</td>
+					<td id="carbohydrates">{{item.total_carbohydrates}}</td>
+					<td id="fat">{{item.total_fat}}</td>
+					<td id="fat">{{item.total_weight}}</td>
+					<td if="price">{{item.total_price}} $</td>
 					<td>									 
 						<button type="button" class="btn btn-secondary">
 							<a class="hyperlink-off" href="{% url 'profile:add_to_diet' item.pk %}">Add</a>
