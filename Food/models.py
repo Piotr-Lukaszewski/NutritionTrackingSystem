@@ -3,7 +3,7 @@ from django.conf import settings
 from django.db.models import Sum
 from django.template.defaultfilters import slugify
 
-from .validators import macro_quantity_validator
+from .validators import macro_quantity_validator, price_validator, weight_validaotr
 
 
 FOOD_TYPE_CHOICES = (
@@ -40,8 +40,8 @@ class Ingredient(models.Model):
 	protein = models.FloatField(validators=[macro_quantity_validator,])
 	carbohydrates = models.FloatField(validators=[macro_quantity_validator,])
 	fat = models.FloatField(validators=[macro_quantity_validator,])
-	quantity_per_portion = models.IntegerField(blank=True)
-	price = models.DecimalField(max_digits=100, decimal_places=2, blank=True)
+	quantity_per_portion = models.IntegerField(blank=True, validators=[weight_validaotr,])
+	price = models.DecimalField(max_digits=5, decimal_places=2, blank=True, validators=[price_validator,])
 	food_type = models.CharField(max_length=2, choices=FOOD_TYPE_CHOICES, blank=True)
 	slug = models.SlugField(max_length=100, unique=True, blank=True)
 

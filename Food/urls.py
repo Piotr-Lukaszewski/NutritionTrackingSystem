@@ -15,7 +15,7 @@ from .views import (
                     IngredientDetailView,
                     IngredientTableView,
                     IngredientUpdateView,
-                    ProductDeleteView,
+                    IngredientDeleteView,
 
 )
 
@@ -38,6 +38,6 @@ urlpatterns = [
     path("ingredient_add/", CreateIngredient.as_view(), name="ingredinet_create"),
     path("ingredient_detail/<str:slug>/", IngredientDetailView.as_view(), name="ingredinet_detail"),
     path("ingredient_update/<str:slug>/",IngredientUpdateView.as_view(), name="ingredient_update"),
-    path("ingredient_delete/<str:slug>/",ProductDeleteView.as_view(), name="ingredient_delete"),
+    path("ingredient_delete/<str:slug>/",IngredientDeleteView.as_view(), name="ingredient_delete"),
 
 ]

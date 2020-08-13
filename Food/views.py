@@ -9,8 +9,6 @@ from django.http import HttpResponse
 from .models import Ingredient, Product, ReceipeIngredient
 from .forms import IngredientForm, ProductCreationForm
 
-#########Products + recipes#####################
-
 
 class ProductsTableView(ListView, SuccessMessageMixin):
 	template_name = "Food/product_list.html"
@@ -30,6 +28,7 @@ class SearchResultsView(ListView, SuccessMessageMixin):
 		product_list = Product.objects.filter(name__icontains=query)
 		return product_list
 
+
 class ProductDetailView(DetailView):
 	template_name = "Food/product_detail_view.html"
 	model = Product
@@ -48,6 +47,7 @@ class ProductUpdateView(UpdateView, SuccessMessageMixin):
 		context = super().get_context_data(**kwargs)
 		context['message'] = message
 		return context
+
 
 class ProductDeleteView(DeleteView):
 	model = Product
@@ -91,7 +91,7 @@ def add_ingredient(request, slug):
 	context["recipe"] = ReceipeIngredient.objects.filter(product=product)
 	return render(request, "Food/ingredient_table.html", context)
 
-# def create_recipe(request, prod_pk, ing_pk):
+
 def create_recipe(request, prod_slug, ing_slug):
 	"""		
 		Adds ingredients to a recipe combined with a previously created product.
@@ -112,6 +112,13 @@ def create_recipe(request, prod_slug, ing_slug):
 	#add message & refresh table after adding each ingredient
 	# return redirect("food:ingredient_table", pk=new_prod.pk)
 	return HttpResponse(status=204)
+
+#Repair!!
+class IngredientDeleteView(DeleteView):
+	model = Ingredient
+	template_name = "Food/ingredient_delete.html"
+	success_url = reverse_lazy("food:ingredinet_table")
+	context_object_name = "object"
 
 
 #######Ingredients##########
@@ -181,10 +188,6 @@ class IngredientUpdateView(UpdateView, SuccessMessageMixin):
 		return context
 
 
-class ProductDeleteView(DeleteView):
-	model = Ingredient
-	template_name = "Food/ingredient_delete.html"
-	success_url = reverse_lazy("food:ingredinet_table")
-	context_object_name = "object"
+
 
 
