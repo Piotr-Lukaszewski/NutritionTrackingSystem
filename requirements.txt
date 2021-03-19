@@ -10,7 +10,7 @@ Django==3.0.7
 django-allauth==0.42.0
 django-crispy-forms==1.8.1
 django-filter==2.2.0
-djangorestframework==3.11.0
+djangorestframework==3.11.2
 httpie==2.0.0
 numpy==1.18.1
 pep8==1.7.1
