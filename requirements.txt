@@ -18,7 +18,7 @@ pipenv==2018.11.26
 psycopg2==2.8.4
 pycodestyle==2.5.0
 pygame==1.9.6
-Pygments==2.5.2
+Pygments==2.7.4
 pyparsing==2.4.7
 python-dateutil==2.8.1
 python-stdnum==1.13
